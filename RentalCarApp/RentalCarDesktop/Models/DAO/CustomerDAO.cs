@@ -142,7 +142,7 @@ namespace RentalCarDesktop.Models.DAO
                         return customer;
 
                     }
-                    else
+                    else if(counter > 1)
                     {
                         MessageBox.Show("Please enter the full name for finalizing your search!");
                     }

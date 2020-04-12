@@ -111,7 +111,7 @@ namespace RentalCarDesktop
 
                 } catch (Exception ex)
                 {
-                    MessageBox.Show("Please enter the full name for finalizing your search!");
+                    MessageBox.Show("SQL error:" + ex.Message);
                 }
                 
                 /*try

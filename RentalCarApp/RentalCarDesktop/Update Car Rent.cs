@@ -104,6 +104,7 @@ namespace RentalCarDesktop
                 dateTimePicker2.ResetText();
                 listBox1.SelectedIndex = 0;
                 comboBox1.SelectedIndex = 0;
+                
                 /*}
                 catch (SqlException ex)
             {
@@ -119,6 +120,8 @@ namespace RentalCarDesktop
 
                         void search()
                         {*/
+            label10.Text = "";
+
             if (validateCarPlate() & validateClient())
             {
                 /*plate = "";
