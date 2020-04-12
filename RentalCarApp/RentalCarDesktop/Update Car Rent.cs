@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RentalCarDesktop.Models.Business;
+using RentalCarDesktop.Models.DAO;
+using RentalCarDesktop.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,23 +22,45 @@ namespace RentalCarDesktop
         {
             InitializeComponent();
         }
+        private static ReservationService reservationService = ReservationService.Instance;
 
-        string plate = "";
+        private static CarService carService = CarService.Instance;
+        private static CustomerService customerService = CustomerService.Instance;
+        private static CarDAO carDAO = CarDAO.Instance;
+        private static CouponService couponService = CouponService.Instance;
+        Reservation reservation;
+
+/*        string plate = "";
         string costumerID = "";
-        string startD = "";
+        string startD = "";*/
         string carI = "";
         string rStatus = "";
-        string endD = "";
-        string location = "";
+/*        string endD = "";
+        string location = "";*/
         string updateLocation = "";
-        string coup = "";
+/*        string coup = "";*/
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (validateCarPlate() && validateClient() && validateCity() && validateDate() && validateRentPeriod())
             {
-                
-                string sql = "UPDATE Reservations SET ReservStatsID =  @reservStatsID, StartDate =  @startDate, EndDate =  @endDate, Location = @city, CouponCode = @couponCode WHERE CarPlate = @carPlate AND CostumerID = @clientID;";
+                if (listBox1.SelectedItem.Equals("OPEN"))
+                {
+                    rStatus = "1";
+                }
+                else if (listBox1.SelectedItem.Equals("CLOSED"))
+                {
+                    rStatus = "2";
+                }
+                else
+                {
+                    rStatus = "3";
+                }
+
+                Reservation reservation = new Reservation(Int32.Parse(carI), textBox1.Text, Int32.Parse(textBox2.Text), Int32.Parse(rStatus), dateTimePicker1.Value, dateTimePicker2.Value, textBox5.Text, comboBox1.SelectedItem.ToString());
+                reservationService.update(reservation);
+
+                /*string sql = "UPDATE Reservations SET ReservStatsID =  @reservStatsID, StartDate =  @startDate, EndDate =  @endDate, Location = @city, CouponCode = @couponCode WHERE CarPlate = @carPlate AND CostumerID = @clientID;";
                 try
                 {
                     SqlCommand cmd;
@@ -68,103 +93,110 @@ namespace RentalCarDesktop
                     cmd.Parameters.Clear();
                     cmd.Dispose();
 
-                    MessageBox.Show("Record updated successfully!");
+                    MessageBox.Show("Record updated successfully!");*/
 
-                    foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
-                    {   
-                        tb.Clear();
-                        tb.ReadOnly = false;
-                    }
-                    dateTimePicker1.ResetText();
-                    dateTimePicker2.ResetText();
-                    listBox1.SelectedIndex = 0;
-                    comboBox1.SelectedIndex = 0;
-                }
-                catch (SqlException ex)
+                foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
                 {
-                    MessageBox.Show("SQL error: " + ex.Message);
+                    tb.Clear();
+                    tb.ReadOnly = false;
                 }
+                dateTimePicker1.ResetText();
+                dateTimePicker2.ResetText();
+                listBox1.SelectedIndex = 0;
+                comboBox1.SelectedIndex = 0;
+                /*}
+                catch (SqlException ex)
+            {
+                MessageBox.Show("SQL error: " + ex.Message);
+            }*/
             }
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            search();
+            /*            search();
 
-            void search()
+                        void search()
+                        {*/
+            if (validateCarPlate() & validateClient())
             {
-                if (validateCarPlate() & validateClient())
+                /*plate = "";
+                costumerID = "";
+                startD = "";*/
+                carI = "";
+                rStatus = "";
+                /*endD = "";
+                location = "";
+                coup = "";*/
+                reservation = reservationService.search(textBox1.Text, textBox2.Text);
+
+                /*try
                 {
-                    plate = "";
-                    costumerID = "";
-                    startD = "";
-                    carI = "";
-                    rStatus = "";
-                    endD = "";
-                    location = "";
-                    coup = "";
-                    try
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM Reservations WHERE CarPlate = @plate AND CostumerID = @CostumerID;", Program.conn);
+                    cmd.Parameters.AddWithValue("@plate", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@CostumerID", textBox2.Text);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    if (dr.Read())
                     {
-                        SqlCommand cmd = new SqlCommand("SELECT * FROM Reservations WHERE CarPlate = @plate AND CostumerID = @CostumerID;", Program.conn);
-                        cmd.Parameters.AddWithValue("@plate", textBox1.Text);
-                        cmd.Parameters.AddWithValue("@CostumerID", textBox2.Text);
-                        SqlDataReader dr = cmd.ExecuteReader();
-
-                        if (dr.Read())
-                        {
-                            plate = dr["CarPlate"].ToString();
-                            costumerID = dr["CostumerID"].ToString();
-                            startD = dr["StartDate"].ToString();
-                            carI = dr["CarID"].ToString();
-                            rStatus = dr["ReservStatsID"].ToString();
-                            endD = dr["EndDate"].ToString();
-                            location = dr["Location"].ToString();
-                            coup = dr["CouponCode"].ToString();
-
-                        }
-                        cmd.Parameters.Clear();
-                        cmd.Dispose();
-                        dr.Close();
-
-                        textBox1.Text = plate;
-                        textBox2.Text = costumerID;
-                        if(rStatus == "1")
-                        {
-                            listBox1.SelectedItem = "OPEN";
-                        } else if(rStatus == "2")
-                        {
-                            listBox1.SelectedItem = "CLOSED";
-                        } else if(rStatus == "3")
-                        {
-                            listBox1.SelectedItem = "CANCELED";
-                        }
-
-                        textBox5.Text = location;
-                        dateTimePicker1.Value = DateTime.Parse(startD);
-                        dateTimePicker2.Value = DateTime.Parse(endD);
-                        comboBox1.SelectedItem = coup;
-
-                        textBox1.ReadOnly = true;
-                        textBox2.ReadOnly = true;
+                        plate = dr["CarPlate"].ToString();
+                        costumerID = dr["CostumerID"].ToString();
+                        startD = dr["StartDate"].ToString();
+                        carI = dr["CarID"].ToString();
+                        rStatus = dr["ReservStatsID"].ToString();
+                        endD = dr["EndDate"].ToString();
+                        location = dr["Location"].ToString();
+                        coup = dr["CouponCode"].ToString();
 
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error on searching existing records, this Car Plate is not associated with the entered Client ID");
-
-                    }
-                }
-                else
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    dr.Close();*/
+                carI = reservation.carID.ToString();
+                textBox1.Text = reservation.carPlate.ToString();
+                textBox2.Text = reservation.costumerID.ToString();
+                if (reservation.reservStatsID == 1)
                 {
-                    MessageBox.Show("For searching a Reservation, it is mandatory to enter the Car Plate and Client ID");
+                    rStatus = "1";
+                    listBox1.SelectedItem = ReservationStatuses.OPEN.ToString();
+                }
+                else if (reservation.reservStatsID == 2)
+                {
+                    rStatus = "2";
+                    listBox1.SelectedItem = ReservationStatuses.CLOSED.ToString();
+                }
+                else if (reservation.reservStatsID == 3)
+                {
+                    rStatus = "3";
+                    listBox1.SelectedItem = ReservationStatuses.CANCELED.ToString();
                 }
 
+                textBox5.Text = reservation.location.ToString();
+                dateTimePicker1.Value = DateTime.Parse(reservation.startDate.ToString());
+                dateTimePicker2.Value = DateTime.Parse(reservation.endDate.ToString());
+                comboBox1.SelectedItem = reservation.couponCode.ToString();
+
+                textBox1.ReadOnly = true;
+                textBox2.ReadOnly = true;
+
+                /*}
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error on searching existing records, this Car Plate is not associated with the entered Client ID");
+
+                }*/
             }
+            else
+            {
+                MessageBox.Show("For searching a Reservation, it is mandatory to enter the Car Plate and Client ID");
+            }
+
+            //}
 
         }
 
-        private int getID(string col, string table, string param, string paramValue)
+        /*private int getID(string col, string table, string param, string paramValue)
         {
             SqlCommand cmd = new SqlCommand();
             try
@@ -204,24 +236,25 @@ namespace RentalCarDesktop
                 MessageBox.Show("Invalid input format for\n", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
-        }
+        }*/
 
         private bool validateCarPlate()
         {
-            string text = textBox1.Text;
+            string carPlate = textBox1.Text;
             bool plate = true;
 
-            if (String.IsNullOrEmpty(text))
+            if (String.IsNullOrEmpty(carPlate))
             {
                 label7.Text = "Car Plate field can not be empty!";
                 plate = false;
             }
             else
             {
-                int carP = getID("CarID", "Cars", "Plate", text);
+                int carP = carService.confirmID("CarID", carPlate);
+                //int carP = getID("CarID", "Cars", "Plate", text);
                 if (carP == 0)
                 {
-                    if (!Regex.IsMatch(text, "[A-Z]{1-2} [0-9]{1-2} [A-Z]{1-3}"))
+                    if (!Regex.IsMatch(carPlate, "[A-Z]{1-2} [0-9]{1-2} [A-Z]{1-3}"))
                     {
                         label7.Text = "Invalid input type, the car plate format should be: ZZ 00 ZZZ";
                         plate = false;
@@ -244,17 +277,18 @@ namespace RentalCarDesktop
 
         private bool validateClient()
         {
-            string text = textBox2.Text;
+            string clientID = textBox2.Text;
             bool cl = true;
 
-            if (String.IsNullOrEmpty(text))
+            if (String.IsNullOrEmpty(clientID))
             {
                 label8.Text = "Client field can not be empty!";
                 cl = false;
             }
             else
             {
-                int client = getID("CostumerID", "Customers", "CostumerID", text);
+                int client = customerService.confirmID(clientID);
+                //int client = getID("CostumerID", "Customers", "CostumerID", text);
                 if (client == 0)
                 {
                     label8.Text = "This client does not exist, please enter another client!";
@@ -271,19 +305,21 @@ namespace RentalCarDesktop
 
         private bool validateCity()
         {
-            string text = textBox5.Text;
+            string loc = textBox5.Text;
             string plate = textBox1.Text;
             bool location = true;
 
-            if (String.IsNullOrEmpty(text))
+            if (String.IsNullOrEmpty(loc))
             {
                 label10.Text = "City field can not be empty!";
                 location = false;
             }
             else
             {
-                int city = getID("Location", "Cars", "Plate", plate);
-                if (city == 0 || !updateLocation.Equals(textBox5.Text))
+                //int city = getID("Location", "Cars", "Plate", plate);
+                int city = carService.confirmID("Location", plate);
+                updateLocation = carDAO.location;
+                if (city == 0 || !updateLocation.Equals(loc))
                 {
                     label10.Text = "The selected car is not available in this city!";
                     location = false;
@@ -318,8 +354,8 @@ namespace RentalCarDesktop
             bool selectedDate = true;
             DateTime startDate;
             DateTime endDate;
-            DataTable dt = new DataTable();
-            try
+            DataTable dt;
+            /*try
             {
                 string sql = "SELECT * FROM Reservations WHERE CarPlate = @plate;";
                 SqlCommand cmd = new SqlCommand(sql, Program.conn);
@@ -330,7 +366,9 @@ namespace RentalCarDesktop
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
+
+            dt = reservationService.readByPlate(textBox1.Text);
 
             foreach (DataRow row in dt.Rows)
             {
@@ -354,10 +392,11 @@ namespace RentalCarDesktop
         private void populateList()
         {
             List<string> reservList = new List<string>();
-            reservList.Add("OPEN");
-            reservList.Add("CLOSED");
-            reservList.Add("CANCELED");
+            reservList.Add(ReservationStatuses.OPEN.ToString());
+            reservList.Add(ReservationStatuses.CLOSED.ToString());
+            reservList.Add(ReservationStatuses.CANCELED.ToString());
             listBox1.DataSource = reservList;
+
         }
 
         private void Update_Car_Rent_Load(object sender, EventArgs e)
@@ -368,7 +407,16 @@ namespace RentalCarDesktop
             label10.Text = "";
             populateList();
 
-            DataTable dt = new DataTable();
+            List<Coupon> coupons = new List<Coupon>();
+            coupons = couponService.readAll();
+
+            foreach (Coupon coupon in coupons)
+            {
+                comboBox1.Items.Add(coupon.couponCode);
+            }
+            comboBox1.SelectedIndex = 0;
+
+            /*DataTable dt = new DataTable();
             try
             {
                 string sql = "SELECT CouponCode FROM Coupons";
@@ -384,7 +432,7 @@ namespace RentalCarDesktop
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
         }
 
         private void button3_Click(object sender, EventArgs e)

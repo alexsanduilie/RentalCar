@@ -1,4 +1,7 @@
 ﻿using RentalCarDesktop.Models;
+using RentalCarDesktop.Models.Business;
+using RentalCarDesktop.Models.DAO;
+using RentalCarDesktop.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,9 +22,13 @@ namespace RentalCarDesktop
         {
             InitializeComponent();
         }
+        private static ReservationService reservationService = ReservationService.Instance;
+        private static CarService carService = CarService.Instance;
+        private static CustomerService customerService = CustomerService.Instance;
+        private static CarDAO carDAO = CarDAO.Instance;
+        private static CouponService couponService = CouponService.Instance;
 
-        string location = "";
-        private int getID(string col, string table, string param, string paramValue)
+        /*private int getID(string col, string table, string param, string paramValue)
         {
             SqlCommand cmd = new SqlCommand();
             try
@@ -61,25 +68,25 @@ namespace RentalCarDesktop
                 MessageBox.Show("Invalid input format for " + ex.Message + "\n", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
-        }
+        }*/
 
         private bool validateCarPlate()
         {
-            string text = textBox1.Text;
-
+            string Plate = textBox1.Text;
             bool plate = true;
 
-            if (String.IsNullOrEmpty(text))
+            if (String.IsNullOrEmpty(Plate))
             {
                 label6.Text = "Car Plate field can not be empty!";
                 plate = false;
             }
             else
             {
-                int carP = getID("CarID", "Cars", "Plate", text);
+                int carP = carService.confirmID("CarID", Plate);
+                //int carP = getID("CarID", "Cars", "Plate", text);
                 if (carP == 0)
                 {
-                    if (!Regex.IsMatch(text, "[A-Z]{1-2} [0-9]{1-2} [A-Z]{1-3}"))
+                    if (!Regex.IsMatch(Plate, "[A-Z]{1-2} [0-9]{1-2} [A-Z]{1-3}"))
                     {
                         label6.Text = "Invalid input type, the car plate format should be: ZZ 00 ZZZ";
                         plate = false;
@@ -102,18 +109,19 @@ namespace RentalCarDesktop
 
         private bool validateClient()
         {
-            string text = textBox2.Text;
+            string clientID = textBox2.Text;
 
             bool cl = true;
 
-            if (String.IsNullOrEmpty(text))
+            if (String.IsNullOrEmpty(clientID))
             {
                 label7.Text = "Client field can not be empty!";
                 cl = false;
             }
             else
             {
-                int client = getID("CostumerID", "Customers", "CostumerID", text);
+                int client = customerService.confirmID(clientID);
+                //int client = getID("CostumerID", "Customers", "CostumerID", text);
                 if (client == 0)
                 {
                     label7.Text = "This client does not exist, please enter another client!";
@@ -130,20 +138,22 @@ namespace RentalCarDesktop
 
         private bool validateCity()
         {
-            string text = textBox5.Text;
+            string loc = textBox5.Text;
             string plate = textBox1.Text;
 
             bool cl = true;
 
-            if (String.IsNullOrEmpty(text))
+            if (String.IsNullOrEmpty(loc))
             {
                 label10.Text = "City field can not be empty!";
                 cl = false;
             }
             else
             {
-                int city = getID("Location", "Cars", "Plate", plate);
-                if (city == 0 || !location.Equals(textBox5.Text))
+                int city = carService.confirmID("Location", plate);
+                string location = carDAO.location;
+                //int city = getID("Location", "Cars", "Plate", plate);
+                if (city == 0 || !location.Equals(loc))
                 {
                     label10.Text = "The selected car is not available in this city!";
                     cl = false;
@@ -178,8 +188,8 @@ namespace RentalCarDesktop
             bool selectedDate = true;
             DateTime startDate;
             DateTime endDate;
-            DataTable dt = new DataTable();
-            try
+            DataTable dt;
+            /*try
             {
                 string sql = "SELECT * FROM Reservations WHERE CarPlate = @plate;";
                 SqlCommand cmd = new SqlCommand(sql, Program.conn);
@@ -190,7 +200,9 @@ namespace RentalCarDesktop
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
+
+            dt = reservationService.readByPlate(textBox1.Text);
 
             foreach (DataRow row in dt.Rows)
             {
@@ -216,7 +228,11 @@ namespace RentalCarDesktop
 
             if (validateCarPlate() && validateClient() && validateCity() && validateDate() && validateRentPeriod())
             {
-                string sql = "INSERT INTO Reservations VALUES(@carID, @carPlate, @clientID, @reservStatsID, @startDate, @endDate, @city, @couponCode);";
+                int carID = carService.confirmID("CarID", textBox1.Text);
+                Reservation reservation = new Reservation(carID, textBox1.Text, Int32.Parse(textBox2.Text), 1, dateTimePicker1.Value, dateTimePicker2.Value, textBox5.Text, comboBox1.SelectedItem.ToString());
+                reservationService.create(reservation);
+
+                /*string sql = "INSERT INTO Reservations VALUES(@carID, @carPlate, @clientID, @reservStatsID, @startDate, @endDate, @city, @couponCode);";
                 try
                 {
                     SqlCommand cmd;
@@ -243,18 +259,29 @@ namespace RentalCarDesktop
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
-                }
+                }*/
             }
         }
 
         private void Register_New_Car_Rent_Load(object sender, EventArgs e)
         {
+
             label6.Text = "";
             label7.Text = "";
             label9.Text = "";
             label10.Text = "";
 
-            DataTable dt = new DataTable();
+            List<Coupon> coupons = new List<Coupon>();
+            coupons = couponService.readAll();
+
+            foreach (Coupon coupon in coupons)
+            {
+                comboBox1.Items.Add(coupon.couponCode);
+            }
+            comboBox1.SelectedIndex = 0;
+
+
+            /*DataTable dt = new DataTable();
             try
             {
                 string sql = "SELECT CouponCode FROM Coupons";
@@ -271,7 +298,7 @@ namespace RentalCarDesktop
             {
                 MessageBox.Show(ex.Message);
             }
-            comboBox1.SelectedIndex = 0;
+            comboBox1.SelectedIndex = 0;*/
         }
 
         private void button2_Click(object sender, EventArgs e)

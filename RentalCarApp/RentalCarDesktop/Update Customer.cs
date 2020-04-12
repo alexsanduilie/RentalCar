@@ -1,4 +1,6 @@
 ﻿using RentalCarDesktop.Models;
+using RentalCarDesktop.Models.Business;
+using RentalCarDesktop.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +23,9 @@ namespace RentalCarDesktop
             InitializeComponent();
         }
 
+        private static CustomerService customerService = CustomerService.Instance;
+        Customer customer;
+
         string costumerID = "";
         string name = "";
         string birthDate = "";
@@ -29,8 +34,12 @@ namespace RentalCarDesktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(validateClientID() & validateClientUpdate() & validateLocation() & validateZIP()){
-                try
+            if(validateClientID() & validateClientUpdate() & validateLocation() & validateZIP())
+            {
+
+                Customer customer = new Customer(Int32.Parse(textBox1.Text), textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
+                customerService.update(customer);
+                /*try
                 {
                     string sql = "UPDATE Customers SET Name = @Name, BirthDate = @Date, Location = @City, ZIPCode = @ZIP WHERE CostumerID = @ID;";
                     SqlCommand cmd;
@@ -62,7 +71,7 @@ namespace RentalCarDesktop
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
-                }
+                }*/
             }
   
         }
@@ -79,9 +88,33 @@ namespace RentalCarDesktop
             label8.Text = "";
             label9.Text = "";
 
+            customer = customerService.search(textBox1.Text, textBox2.Text);
+
             if (((textBox1.Text != "" && textBox2.Text == "") && validateClientID()) || ((textBox1.Text == "" && textBox2.Text != "") && validateClientName()))
             {
                 try
+                {
+                    costumerID = customer.customerID.ToString();
+                    name = customer.name.ToString();
+                    birthDate = customer.birthDate.ToString();
+                    zipCode = customer.zipCode.ToString();
+                    location = customer.location.ToString();
+
+                    textBox1.Text = costumerID;
+                    textBox2.Text = name;
+                    textBox4.Text = location;
+                    textBox3.Text = zipCode;
+                    dateTimePicker1.Value = DateTime.Parse(birthDate);
+
+                    textBox1.ReadOnly = true;
+                    button2.Enabled = false;
+
+                } catch (Exception ex)
+                {
+                    MessageBox.Show("Please enter the full name for finalizing your search!");
+                }
+                
+                /*try
                 {
 
                     SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE CostumerID = @CostumerID OR Name = @Name;", Program.conn);
@@ -100,22 +133,22 @@ namespace RentalCarDesktop
                     }
                     cmd.Parameters.Clear();
                     cmd.Dispose();
-                    dr.Close();
+                    dr.Close();*/
 
-                    textBox1.Text = costumerID;
+                    /*textBox1.Text = costumerID;
                     textBox2.Text = name;
                     textBox4.Text = location;
                     textBox3.Text = zipCode;
                     dateTimePicker1.Value = DateTime.Parse(birthDate);
 
                     textBox1.ReadOnly = true;
-                    button2.Enabled = false;
-                }
+                    button2.Enabled = false;*/
+               /* }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Please enter the full name for finalizing your search!");
 
-                }
+                }*/
             }
             else
             {
@@ -136,8 +169,7 @@ namespace RentalCarDesktop
             }
             else
             {
-                int client = getRecords("CostumerID", "Customers", "CostumerID", ID);
-                if (client == 0)
+                if (customer == null)
                 {
                     label6.Text = "This client does not exist, please enter another client!";
                     cl = false;
@@ -163,8 +195,7 @@ namespace RentalCarDesktop
             }
             else
             {
-                int client = getRecords("Name", "Customers", "Name", clientName);
-                if (client == 0)
+                if (customer == null)
                 {
                     label7.Text = "This client name couldn't be found, please enter another client!";
                     cl = false;
@@ -233,7 +264,7 @@ namespace RentalCarDesktop
             return zip;
         }
 
-        private int getRecords(string col, string table, string param, string paramValue)
+/*        private int getRecords(string col, string table, string param, string paramValue)
         {
             SqlCommand cmd = new SqlCommand();
             try
@@ -287,7 +318,7 @@ namespace RentalCarDesktop
                 MessageBox.Show("Invalid input format for " + col + "\n", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
-        }
+        }*/
 
         private void button2_Click(object sender, EventArgs e)
         {

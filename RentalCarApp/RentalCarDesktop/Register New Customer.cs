@@ -1,4 +1,6 @@
 ﻿using RentalCarDesktop.Models;
+using RentalCarDesktop.Models.Business;
+using RentalCarDesktop.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,8 +21,9 @@ namespace RentalCarDesktop
         {
             InitializeComponent();
         }
+        private static CustomerService customerService = CustomerService.Instance;
 
-        private int getID(string col, string table)
+       /* private int getID(string col, string table)
         {
             SqlCommand cmd = new SqlCommand();
             try
@@ -43,7 +46,7 @@ namespace RentalCarDesktop
                 MessageBox.Show("Error on generating ID.\n" + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
-        }
+        }*/
 
         private bool validateClient()
         {
@@ -105,7 +108,11 @@ namespace RentalCarDesktop
 
             if (validateClient() & validateLocation() & validateZIP())
             {
-                string sql = "INSERT INTO Customers VALUES(@Name, @Date, @City, @ZIP);";
+                Customer customer = new Customer(textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
+
+                customerService.create(customer);
+
+                /*string sql = "INSERT INTO Customers VALUES(@Name, @Date, @City, @ZIP);";
                 try
                 {
                     SqlCommand cmd;
@@ -127,8 +134,10 @@ namespace RentalCarDesktop
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
-                }
-                textBox1.Text = getID("CostumerID", "Customers").ToString();
+                }*/
+
+                //textBox1.Text = getID("CostumerID", "Customers").ToString();
+                textBox1.Text = customerService.getMaxID("CostumerID").ToString();
             }
 
         }
@@ -141,7 +150,7 @@ namespace RentalCarDesktop
             label6.Text = "";
             label7.Text = "";
             label8.Text = "";
-            textBox1.Text = getID("CostumerID", "Customers").ToString();
+            textBox1.Text = customerService.getMaxID("CostumerID").ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
