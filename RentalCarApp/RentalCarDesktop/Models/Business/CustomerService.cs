@@ -2,6 +2,7 @@
 using RentalCarDesktop.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -90,6 +91,34 @@ namespace RentalCarDesktop.Models.Business
             {
                 MessageBox.Show("Error getting customer ID: " + ex.Message);
                 return 0;
+            }
+        }
+
+        public List<Customer> readAll()
+        {
+            List<Customer> customers = new List<Customer>();
+            try
+            {
+                customers = customerDAO.readAll();
+                return customers;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error getting records: " + ex.Message);
+                return customers;
+            }
+        }
+
+        public DataTable readAllInDataTable()
+        {
+            try
+            {
+                return customerDAO.readAllInDataTable();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error finding data: " + ex.Message);
+                return null;
             }
         }
     }

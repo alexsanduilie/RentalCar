@@ -1,5 +1,7 @@
-﻿using System;
+﻿using RentalCarDesktop.Models.DTO;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -63,6 +65,62 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return no;
+                }
+            }
+
+        }
+
+        public DataTable readAllInDataTable()
+        {
+            string readSQL = "SELECT * FROM " + table_Name;
+            SqlDataAdapter dataAdapter;
+            DataTable dt = new DataTable();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    dataAdapter = new SqlDataAdapter(cmd);
+                    dataAdapter.Fill(dt);
+
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return dt;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return dt;
+                }
+            }
+
+        }
+
+        public List<Car> readAll()
+        {
+            string readSQL = "SELECT * FROM " + table_Name;
+            List<Car> cars = new List<Car>();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        cars.Add(new Car(Int32.Parse(dr["CarID"].ToString()), dr["Plate"].ToString(), dr["Manufacturer"].ToString(), dr["Model"].ToString(), Double.Parse(dr["PricePerDay"].ToString()), dr["Location"].ToString()));
+                    }
+
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return cars;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return cars;
                 }
             }
 

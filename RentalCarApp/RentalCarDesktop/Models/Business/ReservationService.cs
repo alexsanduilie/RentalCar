@@ -81,5 +81,61 @@ namespace RentalCarDesktop.Models.Business
                 return null;
             }
         }
+
+        public List<Reservation> readAll()
+        {
+            List<Reservation> reservations = new List<Reservation>();
+            try
+            {
+                reservations = reservationDAO.readAll();
+                return reservations;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error getting records: " + ex.Message);
+                return reservations;
+            }
+        }
+
+        public DataTable readAllInDataTable()
+        {
+            try
+            {
+                return reservationDAO.readAllInDataTable();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error finding data: " + ex.Message);
+                return null;
+            }
+        }
+        public DataTable readAllInDataTableByStatus(int status)
+        {
+            try
+            {
+                return reservationDAO.readAllInDataTableByStatus(status);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error finding data: " + ex.Message);
+                return null;
+            }
+        }
+
+
+        public List<Reservation> readByStatus(int status)
+        {
+            List<Reservation> reservations = new List<Reservation>();
+            try
+            {
+                reservations = reservationDAO.readByStatus(status);
+                return reservations;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Error getting records: " + ex.Message);
+                return reservations;
+            }
+        }
     }
 }

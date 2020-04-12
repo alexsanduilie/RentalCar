@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -131,11 +132,11 @@ namespace RentalCarDesktop.Models.DAO
 
                     }
                     message = string.Join(Environment.NewLine, cust);
-                    MessageBox.Show("Names found:\n\n" + message);
+                    
                     if (counter == 1)
                     {
-
-                        MessageBox.Show("Records retreived successfully");
+                        
+                        MessageBox.Show("Records retreived successfully\n\n" + message);
                         dr.Close();
                         cmd.Parameters.Clear();
                         cmd.Dispose();
@@ -144,7 +145,8 @@ namespace RentalCarDesktop.Models.DAO
                     }
                     else if(counter > 1)
                     {
-                        MessageBox.Show("Please enter the full name for finalizing your search!");
+                        
+                        MessageBox.Show("Multimple Names found:\n\n" + message + "\n" + "Please enter the full name for finalizing your search!");
                     }
 
                     dr.Close();
@@ -213,6 +215,62 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return no;
+                }
+            }
+
+        }
+
+        public List<Customer> readAll()
+        {
+            string readSQL = "SELECT * FROM " + table_Name;
+            List<Customer> customers = new List<Customer>();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        customers.Add(new Customer(Int32.Parse(dr["CostumerID"].ToString()), dr["Name"].ToString(), DateTime.Parse(dr["BirthDate"].ToString()), dr["Location"].ToString(), Int32.Parse(dr["ZIPCode"].ToString())));
+                    }
+
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return customers;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return customers;
+                }
+            }
+
+        }
+
+        public DataTable readAllInDataTable()
+        {
+            string readSQL = "SELECT * FROM " + table_Name;
+            SqlDataAdapter dataAdapter;
+            DataTable dt = new DataTable();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    dataAdapter = new SqlDataAdapter(cmd);
+                    dataAdapter.Fill(dt);
+
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return dt;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return dt;
                 }
             }
 

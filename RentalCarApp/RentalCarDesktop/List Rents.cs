@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RentalCarDesktop.Models.Business;
+using RentalCarDesktop.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,8 +20,13 @@ namespace RentalCarDesktop
             InitializeComponent();
         }
 
+        ReservationService reservationService = ReservationService.Instance;
+
         private void List_Rents_Load(object sender, EventArgs e)
         {
+            DataTable reservations = new DataTable();
+            reservations = reservationService.readAllInDataTable();
+            dataGridView1.DataSource = reservations;
             // TODO: This line of code loads data into the 'academy_netDataSet.Reservations' table. You can move, or remove it, as needed.
             this.reservationsTableAdapter.Fill(this.academy_netDataSet.Reservations);
         }
@@ -31,7 +38,15 @@ namespace RentalCarDesktop
 
         private void button5_Click(object sender, EventArgs e)
         {
-            try
+            /*List<Reservation> reservations = new List<Reservation>();
+            reservations = reservationService.readAll();
+            dataGridView1.DataSource = reservations;*/
+
+            DataTable reservations = new DataTable();
+            reservations = reservationService.readAllInDataTable();
+            dataGridView1.DataSource = reservations;
+
+            /*try
             {
                 string sql = "SELECT * FROM Reservations;";
                 SqlCommand cmd = new SqlCommand(sql, Program.conn);
@@ -43,28 +58,36 @@ namespace RentalCarDesktop
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            selectReservType(1);
+            //selectReservType(1);
+            selectReservTypeInDataTable(1);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            selectReservType(2);
+            //selectReservType(2);
+            selectReservTypeInDataTable(2);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            selectReservType(3);
+            //selectReservType(3);
+            selectReservTypeInDataTable(3);
         }
 
         private void selectReservType(int reservID)
         {
-            try
+
+            List<Reservation> reservations = new List<Reservation>();
+            reservations = reservationService.readByStatus(reservID);
+            dataGridView1.DataSource = reservations;
+
+            /*try
             {
                 string sql = "SELECT * FROM Reservations WHERE ReservStatsID = @reservID;";
                 SqlCommand cmd = new SqlCommand(sql, Program.conn);
@@ -77,7 +100,14 @@ namespace RentalCarDesktop
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
+        }
+
+        private void selectReservTypeInDataTable(int reservID)
+        {
+            DataTable reservations;
+            reservations = reservationService.readAllInDataTableByStatus(reservID);
+            dataGridView1.DataSource = reservations;
         }
     }
 }

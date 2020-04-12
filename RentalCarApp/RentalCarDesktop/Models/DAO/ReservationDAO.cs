@@ -154,13 +154,127 @@ namespace RentalCarDesktop.Models.DAO
 
         }
 
-        public DataTable readByPlate(string plate)
+        public List<Reservation> readAll()
         {
-            string insertSQL = "SELECT * FROM Reservations WHERE CarPlate = @plate;";
+            string readSQL = "SELECT * FROM " + table_Name;
+            List<Reservation> reservation = new List<Reservation>();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        reservation.Add(new Reservation(Int32.Parse(dr["CarID"].ToString()), dr["CarPlate"].ToString(), Int32.Parse(dr["CostumerID"].ToString()), Int32.Parse(dr["ReservStatsID"].ToString()), DateTime.Parse(dr["StartDate"].ToString()), DateTime.Parse(dr["EndDate"].ToString()), dr["Location"].ToString(), dr["CouponCode"].ToString()));
+                    }
+
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return reservation;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return reservation;
+                }
+            }
+
+        }
+
+        public DataTable readAllInDataTable()
+        {
+            string readSQL = "SELECT * FROM " + table_Name;
             SqlDataAdapter dataAdapter;
             DataTable dt = new DataTable();
 
-            using (SqlCommand cmd = new SqlCommand(insertSQL, Program.conn))
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    dataAdapter = new SqlDataAdapter(cmd);
+                    dataAdapter.Fill(dt);
+
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return dt;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return dt;
+                }
+            }
+
+        }
+
+        public DataTable readAllInDataTableByStatus(int status)
+        {
+            string readSQL = "SELECT * FROM " + table_Name + " WHERE ReservStatsID = @reservID;";
+            SqlDataAdapter dataAdapter;
+            DataTable dt = new DataTable();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@reservID", status);
+                    dataAdapter = new SqlDataAdapter(cmd);
+                    dataAdapter.Fill(dt);
+
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return dt;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return dt;
+                }
+            }
+
+        }
+
+        public List<Reservation> readByStatus(int status)
+        {
+            string readSQL = "SELECT * FROM " + table_Name + " WHERE ReservStatsID = @reservID;";
+            List<Reservation> reservation = new List<Reservation>();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@reservID", status);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        reservation.Add(new Reservation(Int32.Parse(dr["CarID"].ToString()), dr["CarPlate"].ToString(), Int32.Parse(dr["CostumerID"].ToString()), Int32.Parse(dr["ReservStatsID"].ToString()), DateTime.Parse(dr["StartDate"].ToString()), DateTime.Parse(dr["EndDate"].ToString()), dr["Location"].ToString(), dr["CouponCode"].ToString()));
+                    }
+
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return reservation;
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return reservation;
+                }
+            }
+
+        }
+
+        public DataTable readByPlate(string plate)
+        {
+            string readSQL = "SELECT * FROM Reservations WHERE CarPlate = @plate;";
+            SqlDataAdapter dataAdapter;
+            DataTable dt = new DataTable();
+
+            using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
             {
                 try
                 {

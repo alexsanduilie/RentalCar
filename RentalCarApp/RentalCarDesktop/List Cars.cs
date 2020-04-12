@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RentalCarDesktop.Models.Business;
+using RentalCarDesktop.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,11 +18,20 @@ namespace RentalCarDesktop
         {
             InitializeComponent();
         }
+        CarService carService = CarService.Instance;
 
         private void List_Cars_Load(object sender, EventArgs e)
         {
+            DataTable cars = new DataTable();
+            cars = carService.readAllInDataTable();
+            dataGridView1.DataSource = cars;
+
+            /*List<Car> cars = new List<Car>();
+            cars = carService.readAll();
+            dataGridView1.DataSource = cars;*/
+
             // TODO: This line of code loads data into the 'academy_netDataSet.Cars' table. You can move, or remove it, as needed.
-            this.carsTableAdapter.Fill(this.academy_netDataSet.Cars);
+            //this.carsTableAdapter.Fill(this.academy_netDataSet.Cars);
 
         }
 
