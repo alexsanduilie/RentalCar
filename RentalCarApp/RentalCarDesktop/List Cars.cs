@@ -28,6 +28,7 @@ namespace RentalCarDesktop
 
             /*List<Car> cars = new List<Car>();
             cars = carService.readAll();
+            dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = cars;*/
 
             // TODO: This line of code loads data into the 'academy_netDataSet.Cars' table. You can move, or remove it, as needed.

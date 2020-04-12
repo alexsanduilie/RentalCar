@@ -40,6 +40,7 @@ namespace RentalCarDesktop
         {
             /*List<Reservation> reservations = new List<Reservation>();
             reservations = reservationService.readAll();
+            dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = reservations;*/
 
             DataTable reservations = new DataTable();
@@ -85,6 +86,7 @@ namespace RentalCarDesktop
 
             List<Reservation> reservations = new List<Reservation>();
             reservations = reservationService.readByStatus(reservID);
+            dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = reservations;
 
             /*try

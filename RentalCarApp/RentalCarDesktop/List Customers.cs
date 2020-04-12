@@ -23,13 +23,14 @@ namespace RentalCarDesktop
 
         private void List_Customers_Load(object sender, EventArgs e)
         {
-            /*List<Customer> customers = new List<Customer>();
+            List<Customer> customers = new List<Customer>();
             customers = customerService.readAll();
-            dataGridView1.DataSource = customers;*/
-
-            DataTable customers = new DataTable();
-            customers = customerService.readAllInDataTable();
+            dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = customers;
+
+            /*DataTable customers = new DataTable();
+            customers = customerService.readAllInDataTable();
+            dataGridView1.DataSource = customers;*/
 
             // TODO: This line of code loads data into the 'academy_netDataSet1.Customers' table. You can move, or remove it, as needed.
             //this.customersTableAdapter.Fill(this.academy_netDataSet.Customers);
