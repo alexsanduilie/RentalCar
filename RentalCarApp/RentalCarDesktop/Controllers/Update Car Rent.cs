@@ -62,12 +62,11 @@ namespace RentalCarDesktop
             label10.Text = "";
 
             reservation = reservationService.search(textBox1.Text, textBox2.Text);
-            if (validateCarPlate() & validateClient())
+            if ((validateCarPlate() && reservation != null) || (validateClient() && reservation != null) || (validateClient() & validateCarPlate()))
             {
                 carI = "";
                 rStatus = "";
                 
-
                 if (reservation != null)
                 {
                     carI = reservation.carID.ToString();
@@ -80,6 +79,7 @@ namespace RentalCarDesktop
                     comboBox1.SelectedItem = reservation.couponCode.ToString();
                     textBox1.ReadOnly = true;
                     textBox2.ReadOnly = true;
+                    label7.Text = "";
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace RentalCarDesktop
             }
             else
             {
-                MessageBox.Show("For searching a Reservation, it is mandatory to enter the both Car Plate and Client ID");
+                MessageBox.Show("For searching the reservation, please enter the Car Plate and Client ID");
             }
 
         }
