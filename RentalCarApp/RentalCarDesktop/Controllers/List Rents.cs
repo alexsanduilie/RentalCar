@@ -28,7 +28,7 @@ namespace RentalCarDesktop
             reservations = reservationService.readAllInDataTable();
             dataGridView1.DataSource = reservations;
             // TODO: This line of code loads data into the 'academy_netDataSet.Reservations' table. You can move, or remove it, as needed.
-            this.reservationsTableAdapter.Fill(this.academy_netDataSet.Reservations);
+            //this.reservationsTableAdapter.Fill(this.academy_netDataSet.Reservations);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,20 +46,6 @@ namespace RentalCarDesktop
             DataTable reservations = new DataTable();
             reservations = reservationService.readAllInDataTable();
             dataGridView1.DataSource = reservations;
-
-            /*try
-            {
-                string sql = "SELECT * FROM Reservations;";
-                SqlCommand cmd = new SqlCommand(sql, Program.conn);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                DataTable allRents = new DataTable();
-                dataAdapter.Fill(allRents);
-                dataGridView1.DataSource = allRents;
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }*/
 
         }
 
@@ -89,20 +75,6 @@ namespace RentalCarDesktop
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = reservations;
 
-            /*try
-            {
-                string sql = "SELECT * FROM Reservations WHERE ReservStatsID = @reservID;";
-                SqlCommand cmd = new SqlCommand(sql, Program.conn);
-                cmd.Parameters.AddWithValue("@reservID", reservID);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                DataTable cancelledRents = new DataTable();
-                dataAdapter.Fill(cancelledRents);
-                dataGridView1.DataSource = cancelledRents;
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }*/
         }
 
         private void selectReservTypeInDataTable(int reservID)

@@ -18,12 +18,10 @@ namespace RentalCarDesktop.Models.Business
         static CustomerService()
         {
         }
-
         private CustomerService()
         {
             customerDAO = CustomerDAO.Instance;
         }
-
         public static CustomerService Instance
         {
             get

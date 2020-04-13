@@ -71,5 +71,10 @@ namespace RentalCarDesktop
             List_Rents list_Rents = new List_Rents();
             list_Rents.Show();
         }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

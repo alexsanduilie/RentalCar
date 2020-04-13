@@ -17,12 +17,10 @@ namespace RentalCarDesktop.Models.Business
         static CouponService()
         {
         }
-
         private CouponService()
         {
             couponDAO = CouponDAO.Instance;
         }
-
         public static CouponService Instance
         {
             get

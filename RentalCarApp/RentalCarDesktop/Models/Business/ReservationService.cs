@@ -18,12 +18,10 @@ namespace RentalCarDesktop.Models.Business
         static ReservationService()
         {
         }
-
         private ReservationService()
         {
             reservationDAO = ReservationDAO.Instance;
         }
-
         public static ReservationService Instance
         {
             get
@@ -121,7 +119,6 @@ namespace RentalCarDesktop.Models.Business
                 return null;
             }
         }
-
 
         public List<Reservation> readByStatus(int status)
         {

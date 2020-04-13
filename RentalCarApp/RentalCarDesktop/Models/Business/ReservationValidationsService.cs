@@ -17,11 +17,9 @@ namespace RentalCarDesktop.Models
         static ReservationValidationsService()
         {
         }
-
         private ReservationValidationsService()
         {
         }
-
         public static ReservationValidationsService Instance
         {
             get
@@ -38,7 +36,6 @@ namespace RentalCarDesktop.Models
         public bool validateCarPlate(string carPlate, Label message)
         {
             bool plate = true;
-
             if (String.IsNullOrEmpty(carPlate))
             {
                 message.Text = "Car Plate field can not be empty!";
@@ -65,7 +62,6 @@ namespace RentalCarDesktop.Models
                 {
                     message.Text = "";
                 }
-
             }
             return plate;
         }
@@ -73,7 +69,6 @@ namespace RentalCarDesktop.Models
         public bool validateClient(string clientID, Label message)
         {
             bool cl = true;
-
             if (String.IsNullOrEmpty(clientID))
             {
                 message.Text = "Client field can not be empty!";
@@ -98,13 +93,11 @@ namespace RentalCarDesktop.Models
 
         public bool validateCity(string loc, string plate, Label message)
         {
-
-            bool cl = true;
-
+            bool client = true;
             if (String.IsNullOrEmpty(loc))
             {
                 message.Text = "City field can not be empty!";
-                cl = false;
+                client = false;
             }
             else
             {
@@ -113,21 +106,19 @@ namespace RentalCarDesktop.Models
                 if (city == 0 || !location.Equals(loc))
                 {
                     message.Text = "The selected car is not available in this city!";
-                    cl = false;
+                    client = false;
                 }
                 else
                 {
                     message.Text = "";
                 }
-
             }
-            return cl;
+            return client;
         }
 
         public bool validateDate(DateTime startDate, DateTime endDate, Label message)
         {
             bool date = true;
-
             if (startDate > endDate)
             {
                 message.Text = "End Date should be equal or higher than Start Date!";

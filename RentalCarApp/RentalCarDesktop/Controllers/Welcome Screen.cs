@@ -21,7 +21,6 @@ namespace RentalCarDesktop
         {
             Menu menu = new Menu();
             menu.Show();
-
         }
 
         private void button2_Click(object sender, EventArgs e)

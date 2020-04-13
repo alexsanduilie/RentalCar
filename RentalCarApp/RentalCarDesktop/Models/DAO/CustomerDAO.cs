@@ -136,7 +136,7 @@ namespace RentalCarDesktop.Models.DAO
                     if (counter == 1)
                     {
                         
-                        MessageBox.Show("Records retreived successfully\n\n" + message);
+                        MessageBox.Show("Records retrieved successfully\n\n" + message);
                         dr.Close();
                         cmd.Parameters.Clear();
                         cmd.Dispose();

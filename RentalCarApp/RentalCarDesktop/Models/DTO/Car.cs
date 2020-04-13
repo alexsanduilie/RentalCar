@@ -8,12 +8,12 @@ namespace RentalCarDesktop.Models.DTO
 {
     class Car
     {
-        private int carID { get; set; }
-        private string plate { get; set; }
-        private string manufacturer { get; set; }
-        private string model { get; set; }
-        private double price { get; set; }
-        private string location { get; set; }
+        public int carID { get; set; }
+        public string plate { get; set; }
+        public string manufacturer { get; set; }
+        public string model { get; set; }
+        public double price { get; set; }
+        public string location { get; set; }
 
         public Car(int carID, string plate, string manufacturer, string model, double price, string location)
         {
