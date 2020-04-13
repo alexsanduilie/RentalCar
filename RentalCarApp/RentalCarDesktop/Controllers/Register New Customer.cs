@@ -41,14 +41,12 @@ namespace RentalCarDesktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             if (validateClient() & validateLocation() & validateZIP())
             {
                 Customer customer = new Customer(textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
                 customerService.create(customer);
                 textBox1.Text = customerService.getMaxID("CostumerID").ToString();
             }
-
         }
 
         private void Register_New_Customer_Load(object sender, EventArgs e)

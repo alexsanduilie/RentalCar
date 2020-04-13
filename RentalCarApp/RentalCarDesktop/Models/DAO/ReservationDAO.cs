@@ -104,7 +104,14 @@ namespace RentalCarDesktop.Models.DAO
             int counter = 0;
             Reservation reservation = null;
 
-            searchSQL = "SELECT * FROM Reservations WHERE CarPlate = @plate AND CostumerID = @CostumerID;";
+            if (plate != "" && customerID != "")
+            {
+                searchSQL = "SELECT * FROM Reservations WHERE CarPlate = @plate AND CostumerID = @CostumerID;";
+            }
+            else
+            {
+                searchSQL = "SELECT * FROM Reservations WHERE CarPlate = @plate OR CostumerID = @CostumerID;";
+            }
 
             using (SqlCommand cmd = new SqlCommand(searchSQL, Program.conn))
             {
@@ -114,6 +121,8 @@ namespace RentalCarDesktop.Models.DAO
                     cmd.Parameters.AddWithValue("@CostumerID", customerID);
                     SqlDataReader dr = cmd.ExecuteReader();
 
+                    List<Reservation> reserv = new List<Reservation>();
+                    var message = "";
                     while (dr.Read())
                     {
                         reservation = new Reservation();
@@ -125,8 +134,11 @@ namespace RentalCarDesktop.Models.DAO
                         reservation.endDate = DateTime.Parse(dr["EndDate"].ToString());
                         reservation.location = dr["Location"].ToString();
                         reservation.couponCode = dr["CouponCode"].ToString();
+
+                        reserv.Add(reservation);
                         counter++;
                     }
+                    message = string.Join(Environment.NewLine, reserv);
 
                     if (counter == 1)
                     {
@@ -136,13 +148,16 @@ namespace RentalCarDesktop.Models.DAO
                         cmd.Dispose();
                         return reservation;
                     }
-                    else
+                    else if (counter > 1)
                     {
+
+                        MessageBox.Show("Multiple Entries found:\n\n" + message + "\n\n" + "Please enter the Car Plate - Client ID association for finalizing the search!");
                         dr.Close();
-                        cmd.Parameters.Clear();
-                        cmd.Dispose();
-                        return null;
                     }
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
+                    return null;
 
                 }
                 catch (SqlException ex)

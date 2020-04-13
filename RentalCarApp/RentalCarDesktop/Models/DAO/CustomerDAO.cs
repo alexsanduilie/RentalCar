@@ -146,7 +146,8 @@ namespace RentalCarDesktop.Models.DAO
                     else if(counter > 1)
                     {
                         
-                        MessageBox.Show("Multimple Names found:\n\n" + message + "\n" + "Please enter the full name for finalizing your search!");
+                        MessageBox.Show("Multimple Names found:\n\n" + message + "\n\n" + "Please enter the full name for finalizing your search!");
+                        dr.Close();
                     }
 
                     dr.Close();

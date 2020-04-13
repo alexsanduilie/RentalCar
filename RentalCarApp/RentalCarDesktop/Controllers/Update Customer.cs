@@ -56,7 +56,7 @@ namespace RentalCarDesktop
             label9.Text = "";
 
             customer = customerService.search(textBox1.Text, textBox2.Text);
-            if (((textBox1.Text != "" && textBox2.Text == "") && validateClientID()) || ((textBox1.Text == "" && textBox2.Text != "") && validateClientName()) || ((textBox1.Text != "" && textBox2.Text != "") && validateClientID() && validateClientName()))
+            if (((textBox1.Text != "" && textBox2.Text == "") && validateClientID()) || ((textBox1.Text == "" && textBox2.Text != "") && validateClientName()))
             {
                 try
                 {
@@ -79,7 +79,7 @@ namespace RentalCarDesktop
             }
             else
             {
-                MessageBox.Show("You can search a client either by it's client ID or Name");
+                MessageBox.Show("You can search a customer either by it's ID, or Name");
             }
         }
 

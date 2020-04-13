@@ -46,7 +46,7 @@ namespace RentalCarDesktop.Models
                 int carP = carService.confirmID("CarID", carPlate);
                 if (carP == 0)
                 {
-                    if (!Regex.IsMatch(carPlate, "[A-Z]{1-2} [0-9]{1-2} [A-Z]{1-3}"))
+                    if (!Regex.IsMatch(carPlate, "[A-Z]{2} [0-9]{2} [A-Z]{3}"))
                     {
                         message.Text = "Invalid input type, the car plate format should be: ZZ 00 ZZZ";
                         plate = false;
@@ -136,6 +136,7 @@ namespace RentalCarDesktop.Models
             bool selectedDate = true;
             DateTime startDate;
             DateTime endDate;
+            int rStatus;
             DataTable dt;
 
             dt = reservationService.readByPlate(plate);
@@ -144,8 +145,10 @@ namespace RentalCarDesktop.Models
             {
                 startDate = DateTime.Parse(row["StartDate"].ToString());
                 endDate = DateTime.Parse(row["EndDate"].ToString());
+                rStatus = Int32.Parse(row["ReservStatsID"].ToString());
 
-                if (((presentStartDate <= endDate && presentEndDate >= startDate) && condition == "INSERT") || (((presentStartDate <= endDate && presentEndDate >= startDate) && (presentStartDate != startDate && presentEndDate != endDate)) && condition == "UPDATE"))
+
+                if (((presentStartDate <= endDate && presentEndDate >= startDate) && condition == "INSERT" && rStatus == 1) || (((presentStartDate <= endDate && presentEndDate >= startDate) && (presentStartDate != startDate && presentEndDate != endDate)) && condition == "UPDATE" && rStatus ==1))
                 {
                     selectedDate = false;
                     message.Text = "The selected car was already rented in this period!";

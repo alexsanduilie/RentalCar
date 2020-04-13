@@ -62,7 +62,7 @@ namespace RentalCarDesktop.Models.Business
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error updating customer: " + ex.Message);
+                MessageBox.Show("Error searching reservation: " + ex.Message);
                 return null;
             }
         }
