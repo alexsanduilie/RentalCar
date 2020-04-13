@@ -89,6 +89,7 @@
     <Compile Include="Models\DTO\Reservation.cs" />
     <Compile Include="Models\DTO\ReservationStatuses.cs" />
     <Compile Include="Models\InitializeDb.cs" />
+    <Compile Include="Models\Business\ReservationValidationsService.cs" />
     <Compile Include="Register New Car Rent.cs">
       <SubType>Form</SubType>
     </Compile>

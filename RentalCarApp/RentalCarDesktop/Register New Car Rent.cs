@@ -23,6 +23,7 @@ namespace RentalCarDesktop
             InitializeComponent();
         }
         private static ReservationService reservationService = ReservationService.Instance;
+        private static ReservationValidationsService reservationValidations = ReservationValidationsService.Instance;
         private static CarService carService = CarService.Instance;
         private static CustomerService customerService = CustomerService.Instance;
         private static CarDAO carDAO = CarDAO.Instance;
@@ -72,7 +73,9 @@ namespace RentalCarDesktop
 
         private bool validateCarPlate()
         {
-            string Plate = textBox1.Text;
+            return reservationValidations.validateCarPlate(textBox1.Text, label6) == true;
+
+            /*string Plate = textBox1.Text;
             bool plate = true;
 
             if (String.IsNullOrEmpty(Plate))
@@ -104,12 +107,14 @@ namespace RentalCarDesktop
                 }
 
             }
-            return plate;
+            return plate;*/
         }
 
         private bool validateClient()
         {
-            string clientID = textBox2.Text;
+
+            return reservationValidations.validateClient(textBox2.Text, label7);
+            /*string clientID = textBox2.Text;
 
             bool cl = true;
 
@@ -133,12 +138,14 @@ namespace RentalCarDesktop
                 }
 
             }
-            return cl;
+            return cl;*/
         }
 
         private bool validateCity()
         {
-            string loc = textBox5.Text;
+
+            return reservationValidations.validateCity(textBox5.Text, textBox1.Text, label10);
+            /*string loc = textBox5.Text;
             string plate = textBox1.Text;
 
             bool cl = true;
@@ -164,12 +171,13 @@ namespace RentalCarDesktop
                 }
 
             }
-            return cl;
+            return cl;*/
         }
 
         private bool validateDate()
         {
-            bool date = true;
+            return reservationValidations.validateDate(dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, label9);
+            /*bool date = true;
 
             if (dateTimePicker1.Value.Date > dateTimePicker2.Value.Date)
             {
@@ -180,16 +188,18 @@ namespace RentalCarDesktop
             {
                 label9.Text = "";
             }
-            return date;
+            return date;*/
         }
 
         private bool validateRentPeriod()
         {
-            bool selectedDate = true;
+
+            return reservationValidations.validateRentPeriod(textBox1.Text, label9, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "INSERT");
+            /*bool selectedDate = true;
             DateTime startDate;
             DateTime endDate;
             DataTable dt;
-            /*try
+            *//*try
             {
                 string sql = "SELECT * FROM Reservations WHERE CarPlate = @plate;";
                 SqlCommand cmd = new SqlCommand(sql, Program.conn);
@@ -200,7 +210,7 @@ namespace RentalCarDesktop
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }*//*
 
             dt = reservationService.readByPlate(textBox1.Text);
 
@@ -220,7 +230,7 @@ namespace RentalCarDesktop
                     label9.Text = "";
                 }
             }
-            return selectedDate;
+            return selectedDate;*/
         }
 
         private void button1_Click(object sender, EventArgs e)

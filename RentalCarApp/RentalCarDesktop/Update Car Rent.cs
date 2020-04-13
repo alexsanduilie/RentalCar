@@ -1,4 +1,5 @@
-﻿using RentalCarDesktop.Models.Business;
+﻿using RentalCarDesktop.Models;
+using RentalCarDesktop.Models.Business;
 using RentalCarDesktop.Models.DAO;
 using RentalCarDesktop.Models.DTO;
 using System;
@@ -28,6 +29,7 @@ namespace RentalCarDesktop
         private static CustomerService customerService = CustomerService.Instance;
         private static CarDAO carDAO = CarDAO.Instance;
         private static CouponService couponService = CouponService.Instance;
+        private static ReservationValidationsService reservationValidations = ReservationValidationsService.Instance;
         Reservation reservation;
 
 /*        string plate = "";
@@ -243,7 +245,9 @@ namespace RentalCarDesktop
 
         private bool validateCarPlate()
         {
-            string carPlate = textBox1.Text;
+
+            return reservationValidations.validateCarPlate(textBox1.Text, label7);
+            /*string carPlate = textBox1.Text;
             bool plate = true;
 
             if (String.IsNullOrEmpty(carPlate))
@@ -275,12 +279,13 @@ namespace RentalCarDesktop
                 }
 
             }
-            return plate;
+            return plate;*/
         }
 
         private bool validateClient()
         {
-            string clientID = textBox2.Text;
+            return reservationValidations.validateClient(textBox2.Text, label8);
+            /*string clientID = textBox2.Text;
             bool cl = true;
 
             if (String.IsNullOrEmpty(clientID))
@@ -303,12 +308,13 @@ namespace RentalCarDesktop
                 }
 
             }
-            return cl;
+            return cl;*/
         }
 
         private bool validateCity()
         {
-            string loc = textBox5.Text;
+            return reservationValidations.validateCity(textBox5.Text, textBox1.Text, label10);
+            /*string loc = textBox5.Text;
             string plate = textBox1.Text;
             bool location = true;
 
@@ -333,12 +339,13 @@ namespace RentalCarDesktop
                 }
 
             }
-            return location;
+            return location;*/
         }
 
         private bool validateDate()
         {
-            bool date = true;
+            return reservationValidations.validateDate(dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, label9);
+            /*bool date = true;
 
             if (dateTimePicker1.Value.Date > dateTimePicker2.Value.Date)
             {
@@ -349,16 +356,17 @@ namespace RentalCarDesktop
             {
                 label9.Text = "";
             }
-            return date;
+            return date;*/
         }
 
         private bool validateRentPeriod()
         {
-            bool selectedDate = true;
+            return reservationValidations.validateRentPeriod(textBox1.Text, label9, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "UPDATE");
+            /*bool selectedDate = true;
             DateTime startDate;
             DateTime endDate;
             DataTable dt;
-            /*try
+            *//*try
             {
                 string sql = "SELECT * FROM Reservations WHERE CarPlate = @plate;";
                 SqlCommand cmd = new SqlCommand(sql, Program.conn);
@@ -369,7 +377,7 @@ namespace RentalCarDesktop
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }*//*
 
             dt = reservationService.readByPlate(textBox1.Text);
 
@@ -378,7 +386,7 @@ namespace RentalCarDesktop
                 startDate = DateTime.Parse(row["StartDate"].ToString());
                 endDate = DateTime.Parse(row["EndDate"].ToString());
 
-                if ((dateTimePicker1.Value.Date <= endDate && dateTimePicker2.Value.Date >= startDate) && (dateTimePicker1.Value != startDate && dateTimePicker2.Value != endDate))
+                if (((dateTimePicker1.Value.Date <= endDate && dateTimePicker2.Value.Date >= startDate) && (dateTimePicker1.Value != startDate && dateTimePicker2.Value != endDate)))
                 {
                     selectedDate = false;
                     label9.Text = "The selected car was already rented in this period!";
@@ -389,7 +397,7 @@ namespace RentalCarDesktop
                     label9.Text = "";
                 }
             }
-            return selectedDate;
+            return selectedDate;*/
         }
 
         private void populateList()
