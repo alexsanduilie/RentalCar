@@ -55,6 +55,10 @@ namespace RentalCarDesktop
             label8.Text = "";
             label9.Text = "";
 
+            if((textBox1.ReadOnly == true))
+            {
+                textBox2.Text = "";     
+            }
             customer = customerService.search(textBox1.Text, textBox2.Text);
             if (((textBox1.Text != "" && textBox2.Text == "") && validateClientID()) || ((textBox1.Text == "" && textBox2.Text != "") && validateClientName()))
             {
