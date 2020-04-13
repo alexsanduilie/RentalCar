@@ -34,7 +34,8 @@ namespace RentalCarDesktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (validateCarPlate() && validateClient() && validateCity() && validateDate() && validateRentPeriod())
+
+            if (validateCarPlate() & validateClient() & validateCity() & validateDate() & validateRentPeriod())
             {
                 rStatus = reservationStatuses.returnRStatus(listBox1);
                 Reservation reservation = new Reservation(Int32.Parse(carI), textBox1.Text, Int32.Parse(textBox2.Text), Int32.Parse(rStatus), dateTimePicker1.Value, dateTimePicker2.Value, textBox5.Text, comboBox1.SelectedItem.ToString());
@@ -55,6 +56,9 @@ namespace RentalCarDesktop
 
         private void button2_Click(object sender, EventArgs e)
         {
+            label7.Text = "";
+            label8.Text = "";
+            label9.Text = "";
             label10.Text = "";
 
             if (validateCarPlate() & validateClient())
