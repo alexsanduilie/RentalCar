@@ -46,14 +46,96 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="academy_netDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>academy_netDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\List Cars.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Controllers\List Cars.Designer.cs">
+      <DependentUpon>List Cars.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\List Customers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\List Customers.Designer.cs">
+      <DependentUpon>List Customers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\List Rents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\List Rents.Designer.cs">
+      <DependentUpon>List Rents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Business\CarService.cs" />
+    <Compile Include="Models\Business\CouponService.cs" />
+    <Compile Include="Models\Business\CustomerService.cs" />
+    <Compile Include="Models\Business\CustomerValidationsService.cs" />
+    <Compile Include="Models\Business\ReservationService.cs" />
+    <Compile Include="Models\Business\ReservationStatusesService.cs" />
+    <Compile Include="Models\DAO\CarDAO.cs" />
+    <Compile Include="Models\DAO\CouponDAO.cs" />
+    <Compile Include="Models\DAO\CustomerDAO.cs" />
+    <Compile Include="Models\DAO\ReservationDAO.cs" />
+    <Compile Include="Models\DTO\Car.cs" />
+    <Compile Include="Models\DTO\Coupon.cs" />
+    <Compile Include="Models\DTO\Customer.cs" />
+    <Compile Include="Models\DTO\Reservation.cs" />
+    <Compile Include="Models\DTO\ReservationStatuses.cs" />
+    <Compile Include="Models\Database\InitializeDb.cs" />
+    <Compile Include="Models\Business\ReservationValidationsService.cs" />
+    <Compile Include="Controllers\Register New Car Rent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Register New Car Rent.Designer.cs">
+      <DependentUpon>Register New Car Rent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Register New Customer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Register New Customer.Designer.cs">
+      <DependentUpon>Register New Customer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Update Car Rent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Update Car Rent.Designer.cs">
+      <DependentUpon>Update Car Rent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Update Customer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Update Customer.Designer.cs">
+      <DependentUpon>Update Customer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Welcome Screen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Welcome Screen.Designer.cs">
+      <DependentUpon>Welcome Screen.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controllers\List Cars.resx">
+      <DependentUpon>List Cars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\List Customers.resx">
+      <DependentUpon>List Customers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\List Rents.resx">
+      <DependentUpon>List Rents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +145,32 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controllers\Register New Car Rent.resx">
+      <DependentUpon>Register New Car Rent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Register New Customer.resx">
+      <DependentUpon>Register New Customer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Update Car Rent.resx">
+      <DependentUpon>Update Car Rent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Update Customer.resx">
+      <DependentUpon>Update Customer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Welcome Screen.resx">
+      <DependentUpon>Welcome Screen.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="academy_netDataSet.xsc">
+      <DependentUpon>academy_netDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="academy_netDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>academy_netDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="academy_netDataSet.xss">
+      <DependentUpon>academy_netDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

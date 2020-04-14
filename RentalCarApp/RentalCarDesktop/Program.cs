@@ -1,5 +1,8 @@
-﻿using System;
+﻿using RentalCarDesktop.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -8,15 +11,16 @@ namespace RentalCarDesktop
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        public static SqlConnection conn;
+       
         [STAThread]
         static void Main()
         {
+            InitializeDb initializeDb = new InitializeDb();
+            conn = initializeDb.getConnection();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new WelcomeScreen());
         }
     }
 }
