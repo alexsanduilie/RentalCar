@@ -95,7 +95,8 @@ namespace RentalCarDesktop.Models.Business
             }
             else
             {
-                if (customer == null)
+                int customerID = customerService.confirmID(clientID);
+                if (customerID == 0)
                 {
                     message.Text = "This client does not exist, please enter another client!";
                     client = false;
@@ -118,6 +119,7 @@ namespace RentalCarDesktop.Models.Business
             }
             else
             {
+                customer = customerService.search("", clientName);
                 if (customer == null)
                 {
                     message.Text = "This client name couldn't be found, please enter another client!";

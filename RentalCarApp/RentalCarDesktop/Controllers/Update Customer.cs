@@ -35,17 +35,22 @@ namespace RentalCarDesktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(validateClientID() & validateClientName() & validateLocation() & validateZIP())
+            if (textBox1.ReadOnly == true)
             {
-                Customer customer = new Customer(Int32.Parse(textBox1.Text), textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
-                customerService.update(customer);
-                foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
-                {
-                    tb.Clear();
-                    tb.ReadOnly = false;
+                if (validateClientID() & validateClientName() & validateLocation() & validateZIP()){
+                    Customer customer = new Customer(Int32.Parse(textBox1.Text), textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
+                    customerService.update(customer);
+                    foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
+                    {
+                        tb.Clear();
+                        tb.ReadOnly = false;
+                    }
+                    dateTimePicker1.ResetText();
                 }
-                dateTimePicker1.ResetText();
-            } 
+            } else
+            {
+                MessageBox.Show("You can update the rent only after you validate the search");
+            }
         }
 
         private void search()
@@ -59,8 +64,29 @@ namespace RentalCarDesktop
             {
                 textBox2.Text = "";     
             }
-            customer = customerService.search(textBox1.Text, textBox2.Text);
-            if (((textBox1.Text != "" && textBox2.Text == "") && validateClientID()) || ((textBox1.Text == "" && textBox2.Text != "") && validateClientName()))
+            if((textBox1.Text != "" && textBox2.Text == ""))
+            {
+                if (validateClientID())
+                {
+                    customer = customerService.search(textBox1.Text, textBox2.Text);
+                }
+                
+            } else if((textBox1.Text == "" && textBox2.Text != ""))
+            {
+                if (validateClientName())
+                {    
+                    customer = customerService.search(textBox1.Text, textBox2.Text);
+                }
+                
+            } else if((textBox1.Text != "" && textBox2.Text != "")){
+                if(validateClientID() && validateClientName())
+                {
+                    customer = customerService.search(textBox1.Text, textBox2.Text);
+                }
+                
+            }
+            
+            if (customer != null)
             {
                 try
                 {

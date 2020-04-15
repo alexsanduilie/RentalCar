@@ -33,6 +33,7 @@ namespace RentalCarDesktop.Models.DAO
         }
 
         private static string table_Name = "Customers";
+        private static int searchCounter = 0;
 
         public void create(Customer customer)
         {
@@ -129,14 +130,17 @@ namespace RentalCarDesktop.Models.DAO
 
                         cust.Add(customer);
                         counter++;
+                        searchCounter++;
 
                     }
                     message = string.Join(Environment.NewLine, cust);
                     
                     if (counter == 1)
                     {
-                        
-                        MessageBox.Show("Records retrieved successfully\n\n" + message);
+                        if(searchCounter == 1)
+                        {
+                            MessageBox.Show("Records retrieved successfully\n\n" + message);
+                        }   
                         dr.Close();
                         cmd.Parameters.Clear();
                         cmd.Dispose();

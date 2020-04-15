@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalCarDesktop", "RentalCarDesktop\RentalCarDesktop.csproj", "{F6262F64-C9ED-4822-939A-78C45D8A23F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalCarWeb", "RentalCarWeb\RentalCarWeb.csproj", "{64CE667E-B2ED-4AE2-AB2B-41482B05DE21}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{F6262F64-C9ED-4822-939A-78C45D8A23F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6262F64-C9ED-4822-939A-78C45D8A23F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6262F64-C9ED-4822-939A-78C45D8A23F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{64CE667E-B2ED-4AE2-AB2B-41482B05DE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64CE667E-B2ED-4AE2-AB2B-41482B05DE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64CE667E-B2ED-4AE2-AB2B-41482B05DE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64CE667E-B2ED-4AE2-AB2B-41482B05DE21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
