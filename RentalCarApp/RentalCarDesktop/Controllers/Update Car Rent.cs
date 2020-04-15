@@ -35,23 +35,30 @@ namespace RentalCarDesktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            if (validateCarPlate() & validateClient() & validateCity() & validateDate() & validateRentPeriod())
+            if (textBox1.ReadOnly == true)
             {
-                rStatus = reservationStatuses.returnRStatus(listBox1);
-                Reservation reservation = new Reservation(Int32.Parse(carI), textBox1.Text, Int32.Parse(textBox2.Text), Int32.Parse(rStatus), dateTimePicker1.Value, dateTimePicker2.Value, textBox5.Text, comboBox1.SelectedItem.ToString());
-                reservationService.update(reservation);
+                if (validateCarPlate() & validateClient() & validateCity() & validateDate() & validateRentPeriod()){
+                
+                    rStatus = reservationStatuses.returnRStatus(listBox1);
+                    Reservation reservation = new Reservation(Int32.Parse(carI), textBox1.Text, Int32.Parse(textBox2.Text), Int32.Parse(rStatus), dateTimePicker1.Value, dateTimePicker2.Value, textBox5.Text, comboBox1.SelectedItem.ToString());
+                    reservationService.update(reservation);
 
-                foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
-                {
-                    tb.Clear();
-                    tb.ReadOnly = false;
-                }
-                dateTimePicker1.ResetText();
-                dateTimePicker2.ResetText();
-                listBox1.SelectedIndex = 0;
-                comboBox1.SelectedIndex = 0;
+                    foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
+                    {
+                        tb.Clear();
+                        tb.ReadOnly = false;
+                    }
+                    dateTimePicker1.ResetText();
+                    dateTimePicker2.ResetText();
+                    listBox1.SelectedIndex = 0;
+                    comboBox1.SelectedIndex = 0;
+                } 
             }
+            else
+            {
+                MessageBox.Show("You can update the rent only after you validate the search");
+            }
+
 
         }
 

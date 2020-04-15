@@ -35,17 +35,22 @@ namespace RentalCarDesktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(validateClientID() & validateClientName() & validateLocation() & validateZIP())
+            if (textBox1.ReadOnly == true)
             {
-                Customer customer = new Customer(Int32.Parse(textBox1.Text), textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
-                customerService.update(customer);
-                foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
-                {
-                    tb.Clear();
-                    tb.ReadOnly = false;
+                if (validateClientID() & validateClientName() & validateLocation() & validateZIP()){
+                    Customer customer = new Customer(Int32.Parse(textBox1.Text), textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
+                    customerService.update(customer);
+                    foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
+                    {
+                        tb.Clear();
+                        tb.ReadOnly = false;
+                    }
+                    dateTimePicker1.ResetText();
                 }
-                dateTimePicker1.ResetText();
-            } 
+            } else
+            {
+                MessageBox.Show("You can update the rent only after you validate the search");
+            }
         }
 
         private void search()
