@@ -82,8 +82,7 @@ namespace RentalCarDesktop
                 if(validateClientID() && validateClientName())
                 {
                     customer = customerService.search(textBox1.Text, textBox2.Text);
-                }
-                
+                } 
             }
             
             if (customer != null)
