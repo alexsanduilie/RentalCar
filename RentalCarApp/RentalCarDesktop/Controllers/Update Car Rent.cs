@@ -114,7 +114,7 @@ namespace RentalCarDesktop
             }
             else
             {
-                MessageBox.Show("This car plate is not assocated with the client id, please enter another client or car plate");
+                MessageBox.Show("The car plate is not assocated with the client id, please enter another client or car plate");
             }
         }
 
