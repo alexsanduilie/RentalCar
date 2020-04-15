@@ -59,8 +59,29 @@ namespace RentalCarDesktop
             {
                 textBox2.Text = "";     
             }
-            customer = customerService.search(textBox1.Text, textBox2.Text);
-            if (((textBox1.Text != "" && textBox2.Text == "") && validateClientID()) || ((textBox1.Text == "" && textBox2.Text != "") && validateClientName()))
+            if((textBox1.Text != "" && textBox2.Text == ""))
+            {
+                if (validateClientID())
+                {
+                    customer = customerService.search(textBox1.Text, textBox2.Text);
+                }
+                
+            } else if((textBox1.Text == "" && textBox2.Text != ""))
+            {
+                if (validateClientName())
+                {    
+                    customer = customerService.search(textBox1.Text, textBox2.Text);
+                }
+                
+            } else if((textBox1.Text != "" && textBox2.Text != "")){
+                if(validateClientID() && validateClientName())
+                {
+                    customer = customerService.search(textBox1.Text, textBox2.Text);
+                }
+                
+            }
+            
+            if (customer != null)
             {
                 try
                 {

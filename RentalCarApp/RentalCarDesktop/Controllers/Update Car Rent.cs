@@ -5,6 +5,7 @@ using RentalCarDesktop.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
@@ -61,36 +62,53 @@ namespace RentalCarDesktop
             label9.Text = "";
             label10.Text = "";
 
-            reservation = reservationService.search(textBox1.Text, textBox2.Text);
-            if (validateCarPlate() & validateClient())
+            if (textBox1.Text == "" && textBox2.Text != "")
             {
-                carI = "";
-                rStatus = "";
-                
-
-                if (reservation != null)
+                if (validateClient())
                 {
-                    carI = reservation.carID.ToString();
-                    textBox1.Text = reservation.carPlate.ToString();
-                    textBox2.Text = reservation.costumerID.ToString();
-                    rStatus = reservationStatuses.returnRStatusAndSetListBoxItem(reservation, listBox1);
-                    textBox5.Text = reservation.location.ToString();
-                    dateTimePicker1.Value = DateTime.Parse(reservation.startDate.ToString());
-                    dateTimePicker2.Value = DateTime.Parse(reservation.endDate.ToString());
-                    comboBox1.SelectedItem = reservation.couponCode.ToString();
-                    textBox1.ReadOnly = true;
-                    textBox2.ReadOnly = true;
+                    reservation = reservationService.search(textBox1.Text, textBox2.Text);
                 }
-                else
+            }
+            else if (textBox2.Text == "" && textBox1.Text != "")
+            {
+                if (validateCarPlate())
                 {
-                    MessageBox.Show("This car plate is not assocated with the client id, please enter another client or car plate");
+                    reservation = reservationService.search(textBox1.Text, textBox2.Text);
+                }
+            }
+            else if ((textBox2.Text == "" && textBox1.Text == "") || (textBox2.Text != "" && textBox1.Text != ""))
+            {
+                if (validateCarPlate() & validateClient())
+                {
+                    reservation = reservationService.search(textBox1.Text, textBox2.Text);
                 }
             }
             else
             {
-                MessageBox.Show("For searching a Reservation, it is mandatory to enter the both Car Plate and Client ID");
+                MessageBox.Show("For searching the reservation, please enter the Car Plate, the Client ID, or both");
             }
 
+            carI = "";
+            rStatus = "";
+
+            if (reservation != null)
+            {
+                carI = reservation.carID.ToString();
+                textBox1.Text = reservation.carPlate.ToString();
+                textBox2.Text = reservation.costumerID.ToString();
+                rStatus = reservationStatuses.returnRStatusAndSetListBoxItem(reservation, listBox1);
+                textBox5.Text = reservation.location.ToString();
+                dateTimePicker1.Value = DateTime.Parse(reservation.startDate.ToString());
+                dateTimePicker2.Value = DateTime.Parse(reservation.endDate.ToString());
+                comboBox1.SelectedItem = reservation.couponCode.ToString();
+                textBox1.ReadOnly = true;
+                textBox2.ReadOnly = true;
+                label7.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("This car plate is not assocated with the client id, please enter another client or car plate");
+            }
         }
 
         private bool validateCarPlate()
