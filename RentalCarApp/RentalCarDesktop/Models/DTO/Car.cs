@@ -34,6 +34,7 @@ namespace RentalCarDesktop.Models.DTO
             this.price = price;
             this.location = location;
         }
+        public Car() { }
 
         public override string ToString()
         {

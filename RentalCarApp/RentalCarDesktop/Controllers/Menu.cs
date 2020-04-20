@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RentalCarDesktop.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -75,6 +76,12 @@ namespace RentalCarDesktop
         private void Menu_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            List_Available_Cars list_Available_Cars = new List_Available_Cars();
+            list_Available_Cars.Show();
         }
     }
 }

@@ -24,13 +24,14 @@ namespace RentalCarDesktop
         {
             ListCarsServiceReference.ListCarsServiceSoapClient listCarsServiceSoap = new ListCarsServiceReference.ListCarsServiceSoapClient();
             //The list of cars is returned by querying a web service
-            DataTable cars = new DataTable();
-            cars = listCarsServiceSoap.readAllInDataTable();
-            dataGridView1.DataSource = cars;
-
             /*DataTable cars = new DataTable();
-            cars = carService.readAllInDataTable();
+            listCarsServiceSoap.Open();
+            cars = listCarsServiceSoap.readAllInDataTable();
             dataGridView1.DataSource = cars;*/
+
+            DataTable cars = new DataTable();
+            cars = carService.readAllInDataTable();
+            dataGridView1.DataSource = cars;
 
             /*List<Car> cars = new List<Car>();
             cars = carService.readAll();

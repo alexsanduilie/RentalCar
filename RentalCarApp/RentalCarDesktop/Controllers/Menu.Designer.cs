@@ -36,12 +36,13 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(99, 37);
+            this.button1.Location = new System.Drawing.Point(99, 30);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(155, 23);
             this.button1.TabIndex = 0;
@@ -52,7 +53,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(99, 82);
+            this.button2.Location = new System.Drawing.Point(99, 69);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(155, 23);
             this.button2.TabIndex = 1;
@@ -63,7 +64,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(99, 127);
+            this.button3.Location = new System.Drawing.Point(99, 109);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(155, 23);
             this.button3.TabIndex = 2;
@@ -74,18 +75,18 @@
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(99, 172);
+            this.button4.Location = new System.Drawing.Point(99, 150);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(155, 23);
             this.button4.TabIndex = 3;
-            this.button4.Text = "List Availabe Cars";
+            this.button4.Text = "List All Cars";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
             this.button5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(99, 219);
+            this.button5.Location = new System.Drawing.Point(99, 231);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(155, 23);
             this.button5.TabIndex = 4;
@@ -96,7 +97,7 @@
             // button6
             // 
             this.button6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(99, 262);
+            this.button6.Location = new System.Drawing.Point(99, 274);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(155, 23);
             this.button6.TabIndex = 5;
@@ -107,7 +108,7 @@
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(99, 308);
+            this.button7.Location = new System.Drawing.Point(99, 316);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(155, 23);
             this.button7.TabIndex = 6;
@@ -126,11 +127,23 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // button9
+            // 
+            this.button9.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.Location = new System.Drawing.Point(99, 192);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(155, 23);
+            this.button9.TabIndex = 8;
+            this.button9.Text = "List Availabe Cars";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 450);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
@@ -156,5 +169,6 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
     }
 }
