@@ -229,7 +229,7 @@
             this.pricePerDayDataGridViewTextBoxColumn,
             this.locationDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.carsBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(415, 41);
+            this.dataGridView1.Location = new System.Drawing.Point(574, 45);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(654, 397);
             this.dataGridView1.TabIndex = 26;
@@ -290,7 +290,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Green;
-            this.label10.Location = new System.Drawing.Point(655, 9);
+            this.label10.Location = new System.Drawing.Point(847, 9);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(58, 19);
             this.label10.TabIndex = 27;
@@ -300,7 +300,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1081, 450);
+            this.ClientSize = new System.Drawing.Size(1235, 450);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.dateTimePicker2);

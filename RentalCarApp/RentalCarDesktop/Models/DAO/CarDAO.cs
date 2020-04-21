@@ -36,13 +36,23 @@ namespace RentalCarDesktop.Models.DAO
         public int confirmID(string column, string paramValue)
         {
             int no = 0;
-            string getID = "SELECT " + column + " FROM " + table_Name + " WHERE Plate = @Plate;";
+            string getID;
+            if(column == "CarID")
+            {
+                getID = "SELECT " + column + " FROM " + table_Name + " WHERE Plate = @param;";
+            } else if (column == "Model")
+            {
+                getID = "SELECT " + column + " FROM " + table_Name + " WHERE Model = @param;";
+            } else
+            {
+                getID = "SELECT " + column + " FROM " + table_Name + " WHERE Location = @param;";
+            }
 
             using (SqlCommand cmd = new SqlCommand(getID, Program.conn))
             {
                 try
                 {
-                    cmd.Parameters.AddWithValue("@Plate", paramValue);
+                    cmd.Parameters.AddWithValue("@param", paramValue);
                     SqlDataReader dr = cmd.ExecuteReader();
                     if (dr.Read())
                     {
@@ -53,7 +63,13 @@ namespace RentalCarDesktop.Models.DAO
                         }
                         else
                         {
-                            no = dr.GetInt32(no);
+                            if(column == "Model")
+                            {
+                                no = 1;
+                            } else
+                            {
+                                no = dr.GetInt32(no);
+                            }                           
                         }
                     }
                     dr.Close();
