@@ -49,17 +49,52 @@ namespace RentalCarDesktop.Controllers
             return reservationValidations.validateDate(dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, label8);
         }
 
+        private bool validateRentPeriod()
+        {
+            return reservationValidations.validateRentPeriod(textBox1.Text, label8, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "INSERT");
+        }
+
         List<Car> cars;
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Each search field is independent and only the Car Plate and the City are linked to the Start/End Dates;" +
-                            " For example if you enter a Car Plate which is in a certain city, a Model which is found in another city, and a different City where we have 10 cars, All records based on your searches will be returned;" +
-                            " If you leave all text boxes blank, All Cars available in the Selected Period will be returned; " +
-                            " If you enter the Car Plate and Car Model and a certain Period, those 2 cars will be validated against the selected period -" +
-                            " if the car plate matches the model, than one car will be returned if the period will be valid.");
-            if(validateCarPlate() & validateCarModel() & validateCity() & validateDate())
+            cars = null;
+            if (textBox1.Text != "" && textBox2.Text == "" && textBox5.Text == "")
+            {
+                if (validateCarPlate() && validateRentPeriod() && validateDate())
+                {
+                    cars = carValidations.searchCars(textBox1.Text, textBox2.Text, textBox5.Text, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date);
+                }
+            }
+            else if (textBox1.Text == "" && textBox2.Text != "" && textBox5.Text == "")
+            {
+                if (validateCarModel())
+                {
+                    cars = carValidations.searchCars(textBox1.Text, textBox2.Text, textBox5.Text, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date);
+                }
+            }
+            else if (textBox1.Text == "" && textBox2.Text == "" && textBox5.Text != "")
+            {
+                if (validateCity())
+                {
+                    cars = carValidations.searchCars(textBox1.Text, textBox2.Text, textBox5.Text, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date);
+                }
+            }
+            else if (textBox1.Text == "" && textBox2.Text == "" && textBox5.Text == "")
             {
                 cars = carValidations.searchCars(textBox1.Text, textBox2.Text, textBox5.Text, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date);
+            }
+            else
+            {
+                MessageBox.Show(" Each search field is independent, and ONLY the Car Plate is linked to the Start/End Dates;\n" +
+                            " You can search ONLY by a single criteria, or leave all criterias blank for returning all cars;\n");
+                label6.Text = "";
+                label7.Text = "";
+                label8.Text = "";
+                label9.Text = "";
+            }
+
+            if (cars != null)
+            {
                 dataGridView1.AutoGenerateColumns = true;
                 dataGridView1.DataSource = cars;
                 dataGridView1.Show();
@@ -68,7 +103,8 @@ namespace RentalCarDesktop.Controllers
                 label7.Text = "";
                 label8.Text = "";
                 label9.Text = "";
-            }           
+            }
+            
         }
         
         private void List_Available_Cars_Load(object sender, EventArgs e)

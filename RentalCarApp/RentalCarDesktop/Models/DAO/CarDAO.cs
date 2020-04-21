@@ -185,8 +185,7 @@ namespace RentalCarDesktop.Models.DAO
                             " union" +
                             " select DISTINCT c.CarID, c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location from Cars c" +
                             " inner join Reservations r on c.CarID = r.CarID" +
-                            " where (c.Plate = @plate or c.Model = @model or c.Location = @location)" +
-                            " and not (@presentStartDate <= r.EndDate AND @presentEndDate >= r.StartDate)";
+                            " where (c.Plate = @plate or c.Model = @model or c.Location = @location)";
             }
             else
             {
@@ -194,8 +193,7 @@ namespace RentalCarDesktop.Models.DAO
                             " left join Reservations r on c.CarID = r.CarID where r.CarID is null " +
                             " union" +
                             " select DISTINCT c.CarID, c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location from Cars c" +
-                            " inner join Reservations r on c.CarID = r.CarID" +
-                            " where not (@presentStartDate <= r.EndDate AND @presentEndDate >= r.StartDate)";
+                            " inner join Reservations r on c.CarID = r.CarID";
             }
 
             using (SqlCommand cmd = new SqlCommand(searchSQL, Program.conn))
