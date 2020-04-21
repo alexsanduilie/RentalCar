@@ -87,7 +87,7 @@ namespace RentalCarDesktop.Models.Business
             bool cl = true;
             if (!String.IsNullOrEmpty(city))
             {
-                int location = carService.confirmID("Location", city);
+                int location = carService.confirmOverallLocation("Location", city);
                 if (location == 0)
                 {
                     message.Text = "This location does not exist, please enter another location!";

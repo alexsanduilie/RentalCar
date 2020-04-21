@@ -56,7 +56,7 @@ namespace RentalCarDesktop
         private void button1_Click(object sender, EventArgs e)
         {
 
-            if (validateCarPlate() & validateClient() & validateCity() & validateDate() & validateRentPeriod())
+            if (validateCarPlate() && validateClient() && validateCity() && validateDate() && validateRentPeriod())
             {
                 int carID = carService.confirmID("CarID", textBox1.Text);
                 Reservation reservation = new Reservation(carID, textBox1.Text, Int32.Parse(textBox2.Text), 1, dateTimePicker1.Value, dateTimePicker2.Value, textBox5.Text, comboBox1.SelectedItem.ToString());

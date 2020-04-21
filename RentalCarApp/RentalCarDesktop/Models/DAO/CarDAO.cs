@@ -12,40 +12,38 @@ namespace RentalCarDesktop.Models.DAO
 {
     class CarDAO
     {
-            private static readonly CarDAO instance = new CarDAO();
+        private static readonly CarDAO instance = new CarDAO();
 
-            static CarDAO()
+        static CarDAO()
+        {
+        }
+
+        private CarDAO()
+        {
+        }
+
+        public static CarDAO Instance
+        {
+            get
             {
+                return instance;
             }
+        }
 
-            private CarDAO()
-            {
-            }
-
-            public static CarDAO Instance
-            {
-                get
-                {
-                    return instance;
-                }
-            }
-
-            private static string table_Name = "Cars";
-            public string location = "";
+        private static string table_Name = "Cars";
+        public string location = "";
 
         public int confirmID(string column, string paramValue)
         {
             int no = 0;
             string getID;
-            if(column == "CarID")
+            if (column == "CarID" || column == "Location")
             {
                 getID = "SELECT " + column + " FROM " + table_Name + " WHERE Plate = @param;";
-            } else if (column == "Model")
+            }
+            else
             {
                 getID = "SELECT " + column + " FROM " + table_Name + " WHERE Model = @param;";
-            } else
-            {
-                getID = "SELECT " + column + " FROM " + table_Name + " WHERE Location = @param;";
             }
 
             using (SqlCommand cmd = new SqlCommand(getID, Program.conn))
@@ -63,18 +61,49 @@ namespace RentalCarDesktop.Models.DAO
                         }
                         else
                         {
-                            if(column == "Model")
+                            if (column == "Model")
                             {
                                 no = 1;
-                            } else
+                            }
+                            else
                             {
                                 no = dr.GetInt32(no);
-                            }                           
+                            }
                         }
                     }
                     dr.Close();
                     cmd.Parameters.Clear();
                     cmd.Dispose();
+                    return no;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("SQL error: " + ex.Message);
+                    return no;
+                }
+            }
+
+        }
+
+        public int confirmOverallLocation(string column, string paramValue)
+        {
+            int no = 0;
+            string getID;
+            getID = "SELECT " + column + " FROM " + table_Name + " WHERE Location = @param;";
+
+            using (SqlCommand cmd = new SqlCommand(getID, Program.conn))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@param", paramValue);
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        no = 1;
+                        dr.Close();
+                        cmd.Parameters.Clear();
+                        cmd.Dispose();
+                    }
                     return no;
                 }
                 catch (Exception ex)
@@ -158,12 +187,13 @@ namespace RentalCarDesktop.Models.DAO
                             " inner join Reservations r on c.CarID = r.CarID" +
                             " where (c.Plate = @plate or c.Model = @model or c.Location = @location)" +
                             " and not (@presentStartDate <= r.EndDate AND @presentEndDate >= r.StartDate)";
-            } else
+            }
+            else
             {
                 searchSQL = "select DISTINCT c.CarID, c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location from Cars c" +
-                            " left join Reservations r on c.CarID = r.CarID where r.CarID is null "+
-                            " union"+
-                            " select DISTINCT c.CarID, c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location from Cars c"+
+                            " left join Reservations r on c.CarID = r.CarID where r.CarID is null " +
+                            " union" +
+                            " select DISTINCT c.CarID, c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location from Cars c" +
                             " inner join Reservations r on c.CarID = r.CarID" +
                             " where not (@presentStartDate <= r.EndDate AND @presentEndDate >= r.StartDate)";
             }
@@ -208,7 +238,8 @@ namespace RentalCarDesktop.Models.DAO
                         MessageBox.Show(cars.Count() + " Cars found:\n\n" + message);
                         dr.Close();
                         return cars;
-                    } else
+                    }
+                    else
                     {
                         MessageBox.Show("No cars found for the specified criterias");
                     }
@@ -227,5 +258,5 @@ namespace RentalCarDesktop.Models.DAO
 
         }
 
-    } 
+    }
 }
