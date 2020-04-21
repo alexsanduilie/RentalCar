@@ -50,7 +50,8 @@ namespace RentalCarDesktop
 
         private bool validateRentPeriod()
         {
-            return reservationValidations.validateRentPeriod(textBox1.Text, label9, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "INSERT");
+            Reservation r = null;
+            return reservationValidations.validateRentPeriod(textBox1.Text, label9, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "INSERT", r);
         }
 
         private void button1_Click(object sender, EventArgs e)

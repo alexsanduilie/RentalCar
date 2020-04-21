@@ -58,8 +58,6 @@ namespace RentalCarDesktop
             {
                 MessageBox.Show("You can update the rent only after you validate the search");
             }
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -112,7 +110,6 @@ namespace RentalCarDesktop
                 textBox1.ReadOnly = true;
                 textBox2.ReadOnly = true;
                 label7.Text = "";
-
             }
             else
             {
@@ -142,7 +139,7 @@ namespace RentalCarDesktop
 
         private bool validateRentPeriod()
         {
-            return reservationValidations.validateRentPeriod(textBox1.Text, label9, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "UPDATE");
+            return reservationValidations.validateRentPeriod(textBox1.Text, label9, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "UPDATE", reservation);
         }
 
         private void populateList()

@@ -1,5 +1,6 @@
 ﻿using RentalCarDesktop.Models.Business;
 using RentalCarDesktop.Models.DAO;
+using RentalCarDesktop.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -136,24 +137,34 @@ namespace RentalCarDesktop.Models
             return date;
         }
 
-        public bool validateRentPeriod(string plate, Label message, DateTime presentStartDate, DateTime presentEndDate, string condition)
+        public bool validateRentPeriod(string plate, Label message, DateTime presentStartDate, DateTime presentEndDate, string condition, Reservation reservation)
         {
             bool selectedDate = true;
             DateTime startDate;
             DateTime endDate;
             int rStatus;
             DataTable dt;
+            Reservation dbR = new Reservation();
 
             dt = reservationService.readByPlate(plate);
 
             foreach (DataRow row in dt.Rows)
             {
+                
+                dbR.carPlate = row["CarPlate"].ToString();
+                dbR.costumerID = Int32.Parse(row["CostumerID"].ToString());
+                dbR.startDate = DateTime.Parse(row["StartDate"].ToString());
+                dbR.carID = Int32.Parse(row["CarID"].ToString());
+                dbR.reservStatsID = Int32.Parse(row["ReservStatsID"].ToString());
+                dbR.endDate = DateTime.Parse(row["EndDate"].ToString());
+                dbR.location = row["Location"].ToString();
+                dbR.couponCode = row["CouponCode"].ToString();
+
                 startDate = DateTime.Parse(row["StartDate"].ToString());
                 endDate = DateTime.Parse(row["EndDate"].ToString());
                 rStatus = Int32.Parse(row["ReservStatsID"].ToString());
 
-
-                if (((presentStartDate <= endDate && presentEndDate >= startDate) && condition == "INSERT" && rStatus == 1) || (((presentStartDate <= endDate && presentEndDate >= startDate) && (presentStartDate != startDate && presentEndDate != endDate)) && condition == "UPDATE" && rStatus ==1))
+                if (((presentStartDate <= endDate && presentEndDate >= startDate) && condition == "INSERT" && rStatus == 1) || (((presentStartDate <= endDate && presentEndDate >= startDate) && !reservation.Equals(dbR)) && condition == "UPDATE" && rStatus ==1))
                 {
                     selectedDate = false;
                     message.Text = "The selected car was already rented in this period!";

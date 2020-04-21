@@ -51,7 +51,8 @@ namespace RentalCarDesktop.Controllers
 
         private bool validateRentPeriod()
         {
-            return reservationValidations.validateRentPeriod(textBox1.Text, label8, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "INSERT");
+            Reservation r = null;
+            return reservationValidations.validateRentPeriod(textBox1.Text, label8, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "INSERT", r);
         }
 
         List<Car> cars;
