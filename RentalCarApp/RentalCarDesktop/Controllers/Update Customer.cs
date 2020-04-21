@@ -49,7 +49,7 @@ namespace RentalCarDesktop
                 }
             } else
             {
-                MessageBox.Show("You can update the rent only after you validate the search");
+                MessageBox.Show("You can update the customer only after you validate the search");
             }
         }
 
