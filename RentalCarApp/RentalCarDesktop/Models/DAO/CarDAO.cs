@@ -99,11 +99,11 @@ namespace RentalCarDesktop.Models.DAO
                     SqlDataReader dr = cmd.ExecuteReader();
                     if (dr.Read())
                     {
-                        no = 1;
-                        dr.Close();
-                        cmd.Parameters.Clear();
-                        cmd.Dispose();
+                        no = 1;                       
                     }
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                     return no;
                 }
                 catch (Exception ex)

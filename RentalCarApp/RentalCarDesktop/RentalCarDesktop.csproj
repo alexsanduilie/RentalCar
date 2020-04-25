@@ -88,16 +88,42 @@
     <Compile Include="Controllers\Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Report Cars.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Report Cars.Designer.cs">
+      <DependentUpon>Report Cars.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Report Customers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Report Customers.Designer.cs">
+      <DependentUpon>Report Customers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Report Recent Rents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Report Recent Rents.Designer.cs">
+      <DependentUpon>Report Recent Rents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Reports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Reports.Designer.cs">
+      <DependentUpon>Reports.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Business\CarService.cs" />
     <Compile Include="Models\Business\CarValidationsService.cs" />
     <Compile Include="Models\Business\CouponService.cs" />
     <Compile Include="Models\Business\CustomerService.cs" />
     <Compile Include="Models\Business\CustomerValidationsService.cs" />
+    <Compile Include="Models\Business\ReportsService.cs" />
     <Compile Include="Models\Business\ReservationService.cs" />
     <Compile Include="Models\Business\ReservationStatusesService.cs" />
     <Compile Include="Models\DAO\CarDAO.cs" />
     <Compile Include="Models\DAO\CouponDAO.cs" />
     <Compile Include="Models\DAO\CustomerDAO.cs" />
+    <Compile Include="Models\DAO\ReportsDAO.cs" />
     <Compile Include="Models\DAO\ReservationDAO.cs" />
     <Compile Include="Models\DTO\Car.cs" />
     <Compile Include="Models\DTO\Coupon.cs" />
@@ -152,6 +178,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Report Cars.resx">
+      <DependentUpon>Report Cars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Report Customers.resx">
+      <DependentUpon>Report Customers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Report Recent Rents.resx">
+      <DependentUpon>Report Recent Rents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\Reports.resx">
+      <DependentUpon>Reports.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

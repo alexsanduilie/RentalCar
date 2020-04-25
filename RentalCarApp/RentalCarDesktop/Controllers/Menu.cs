@@ -83,5 +83,11 @@ namespace RentalCarDesktop
             List_Available_Cars list_Available_Cars = new List_Available_Cars();
             list_Available_Cars.Show();
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            Reports reports = new Reports();
+            reports.Show();
+        }
     }
 }
