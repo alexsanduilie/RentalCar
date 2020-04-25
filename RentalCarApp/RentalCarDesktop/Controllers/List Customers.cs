@@ -31,9 +31,6 @@ namespace RentalCarDesktop
             DataTable customers = new DataTable();
             customers = customerService.readAllInDataTable();
             dataGridView1.DataSource = customers;
-
-            // TODO: This line of code loads data into the 'academy_netDataSet1.Customers' table. You can move, or remove it, as needed.
-            //this.customersTableAdapter.Fill(this.academy_netDataSet.Customers);
         }
 
         private void button1_Click(object sender, EventArgs e)

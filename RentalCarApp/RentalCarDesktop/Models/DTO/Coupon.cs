@@ -18,7 +18,6 @@ namespace RentalCarDesktop.Models.DTO
             this.description = description;
             this.discount = discount;
         }
-
         public override string ToString()
         {
             return String.Format("Coupon Code:{0}, Description:{1}, Discount:{2}", couponCode, description, discount);

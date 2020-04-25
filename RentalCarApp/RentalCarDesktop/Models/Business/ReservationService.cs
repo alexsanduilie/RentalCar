@@ -32,107 +32,45 @@ namespace RentalCarDesktop.Models.Business
 
         public void create(Reservation reservation)
         {
-            try
-            {
-                reservationDAO.create(reservation);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error inserting customer: " + ex.Message);
-            }
+            reservationDAO.create(reservation);
         }
 
         public void update(Reservation reservation)
         {
-            try
-            {
-                reservationDAO.update(reservation);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error inserting customer: " + ex.Message);
-            }
+            reservationDAO.update(reservation);
         }
 
         public Reservation search(string plate, string customerID)
         {
-            try
-            {
-                return reservationDAO.search(plate, customerID);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error searching reservation: " + ex.Message);
-                return null;
-            }
+            return reservationDAO.search(plate, customerID);
         }
 
         public DataTable readByPlate(string plate)
         {
-            try
-            {
-                return reservationDAO.readByPlate(plate);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error finding data: " + ex.Message);
-                return null;
-            }
+            return reservationDAO.readByPlate(plate);
         }
 
         public List<Reservation> readAll()
         {
             List<Reservation> reservations = new List<Reservation>();
-            try
-            {
-                reservations = reservationDAO.readAll();
-                return reservations;
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting records: " + ex.Message);
-                return reservations;
-            }
+            reservations = reservationDAO.readAll();
+            return reservations;
         }
 
         public DataTable readAllInDataTable()
         {
-            try
-            {
-                return reservationDAO.readAllInDataTable();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error finding data: " + ex.Message);
-                return null;
-            }
+            return reservationDAO.readAllInDataTable();
         }
         public DataTable readAllInDataTableByStatus(int status)
         {
-            try
-            {
-                return reservationDAO.readAllInDataTableByStatus(status);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error finding data: " + ex.Message);
-                return null;
-            }
+            return reservationDAO.readAllInDataTableByStatus(status);
         }
 
         public List<Reservation> readByStatus(int status)
         {
             List<Reservation> reservations = new List<Reservation>();
-            try
-            {
-                reservations = reservationDAO.readByStatus(status);
-                return reservations;
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting records: " + ex.Message);
-                return reservations;
-            }
+            reservations = reservationDAO.readByStatus(status);
+            return reservations;
         }
     }
 }

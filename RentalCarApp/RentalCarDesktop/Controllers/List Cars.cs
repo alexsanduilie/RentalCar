@@ -22,8 +22,8 @@ namespace RentalCarDesktop
 
         private void List_Cars_Load(object sender, EventArgs e)
         {
-            ListCarsServiceReference.ListCarsServiceSoapClient listCarsServiceSoap = new ListCarsServiceReference.ListCarsServiceSoapClient();
-            //The list of cars is returned by querying a web service
+            //ListCarsServiceReference.ListCarsServiceSoapClient listCarsServiceSoap = new ListCarsServiceReference.ListCarsServiceSoapClient();
+            //The list of cars is returned by querying a web service -> this will work only if the web service is running, because it is built into another solution
             /*DataTable cars = new DataTable();
             listCarsServiceSoap.Open();
             cars = listCarsServiceSoap.readAllInDataTable();
@@ -37,10 +37,6 @@ namespace RentalCarDesktop
             cars = carService.readAll();
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = cars;*/
-
-            // TODO: This line of code loads data into the 'academy_netDataSet.Cars' table. You can move, or remove it, as needed.
-            //this.carsTableAdapter.Fill(this.academy_netDataSet.Cars);
-
         }
 
         private void button1_Click(object sender, EventArgs e)

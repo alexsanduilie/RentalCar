@@ -35,7 +35,7 @@ namespace RentalCarDesktop.Models.DTO
         {
             return String.Format("Car ID:{0}, Car Plate:{1}, Costumer ID:{2}, Reservation Status:{3}, Start Date:{4}, End Date:{5}, Location:{6}, Coupon Code:{7}", carID, carPlate, costumerID, reservStatsID, startDate, endDate, location, couponCode);
         }
-
+        //Equals method overwrited to be able to compare 2 reservations with the same input fileds
         public override bool Equals(object obj)
         {
             var other = obj as Reservation;

@@ -55,6 +55,7 @@ namespace RentalCarDesktop
 
         private void search()
         {
+            customer = null;
             label6.Text = "";
             label7.Text = "";
             label8.Text = "";

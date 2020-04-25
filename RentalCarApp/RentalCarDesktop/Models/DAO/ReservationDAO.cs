@@ -13,15 +13,12 @@ namespace RentalCarDesktop.Models.DAO
     class ReservationDAO
     {
         private static readonly ReservationDAO instance = new ReservationDAO();
-
         static ReservationDAO()
         {
         }
-
         private ReservationDAO()
         {
         }
-
         public static ReservationDAO Instance
         {
             get
@@ -59,10 +56,9 @@ namespace RentalCarDesktop.Models.DAO
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show("SQL error: " + ex.Message);
+                    MessageBox.Show("SQL error: " + ex.Message + "\n You can not register the same Car Plate and Client Id");
                 }
             }
-
         }
 
         public void update(Reservation reservation)
@@ -95,7 +91,6 @@ namespace RentalCarDesktop.Models.DAO
                     MessageBox.Show("SQL error: " + ex.Message);
                 }
             }
-
         }
 
         public Reservation search(string plate, string customerID)
@@ -139,7 +134,6 @@ namespace RentalCarDesktop.Models.DAO
                         counter++;
                     }
                     message = string.Join(Environment.NewLine, reserv);
-
                     if (counter == 1)
                     {
                         MessageBox.Show("Rent retrieved successfully:" + reservation);
@@ -153,12 +147,13 @@ namespace RentalCarDesktop.Models.DAO
 
                         MessageBox.Show("Multiple Entries found:\n\n" + message + "\n\n" + "Please enter the Car Plate - Client ID association for finalizing the search!");
                         dr.Close();
+                        cmd.Parameters.Clear();
+                        cmd.Dispose();
                     }
                     dr.Close();
                     cmd.Parameters.Clear();
                     cmd.Dispose();
                     return null;
-
                 }
                 catch (SqlException ex)
                 {
@@ -166,7 +161,6 @@ namespace RentalCarDesktop.Models.DAO
                     return null;
                 }
             }
-
         }
 
         public List<Reservation> readAll()
@@ -179,7 +173,6 @@ namespace RentalCarDesktop.Models.DAO
                 try
                 {
                     SqlDataReader dr = cmd.ExecuteReader();
-
                     while (dr.Read())
                     {
                         reservation.Add(new Reservation(Int32.Parse(dr["CarID"].ToString()), dr["CarPlate"].ToString(), Int32.Parse(dr["CostumerID"].ToString()), Int32.Parse(dr["ReservStatsID"].ToString()), DateTime.Parse(dr["StartDate"].ToString()), DateTime.Parse(dr["EndDate"].ToString()), dr["Location"].ToString(), dr["CouponCode"].ToString()));
@@ -196,7 +189,6 @@ namespace RentalCarDesktop.Models.DAO
                     return reservation;
                 }
             }
-
         }
 
         public DataTable readAllInDataTable()
@@ -222,7 +214,6 @@ namespace RentalCarDesktop.Models.DAO
                     return dt;
                 }
             }
-
         }
 
         public DataTable readAllInDataTableByStatus(int status)
@@ -249,7 +240,6 @@ namespace RentalCarDesktop.Models.DAO
                     return dt;
                 }
             }
-
         }
 
         public List<Reservation> readByStatus(int status)
@@ -268,7 +258,6 @@ namespace RentalCarDesktop.Models.DAO
                     {
                         reservation.Add(new Reservation(Int32.Parse(dr["CarID"].ToString()), dr["CarPlate"].ToString(), Int32.Parse(dr["CostumerID"].ToString()), Int32.Parse(dr["ReservStatsID"].ToString()), DateTime.Parse(dr["StartDate"].ToString()), DateTime.Parse(dr["EndDate"].ToString()), dr["Location"].ToString(), dr["CouponCode"].ToString()));
                     }
-
                     dr.Close();
                     cmd.Parameters.Clear();
                     cmd.Dispose();
@@ -280,7 +269,6 @@ namespace RentalCarDesktop.Models.DAO
                     return reservation;
                 }
             }
-
         }
 
         public DataTable readByPlate(string plate)
@@ -307,7 +295,6 @@ namespace RentalCarDesktop.Models.DAO
                     return dt;
                 }
             }
-
         }
 
     }

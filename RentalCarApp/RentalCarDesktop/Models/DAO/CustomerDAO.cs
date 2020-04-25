@@ -15,15 +15,12 @@ namespace RentalCarDesktop.Models.DAO
     class CustomerDAO
     {
         private static readonly CustomerDAO instance = new CustomerDAO();
-
         static CustomerDAO()
         {
         }
-
         private CustomerDAO()
         {
         }
-
         public static CustomerDAO Instance
         {
             get
@@ -61,7 +58,6 @@ namespace RentalCarDesktop.Models.DAO
                     MessageBox.Show("SQL error: " + ex.Message);
                 }
             }
-
         }
 
         public void update(Customer customer)
@@ -91,14 +87,13 @@ namespace RentalCarDesktop.Models.DAO
                     MessageBox.Show("SQL error: " + ex.Message);
                 }
             }
-
         }
 
         public Customer search(string customerID, string Name)
         {
             string searchSQL;
             Customer customer = null;
-            
+
             if (Name == "")
             {
                 searchSQL = "SELECT * FROM Customers WHERE CostumerID = @CostumerID;";
@@ -134,31 +129,30 @@ namespace RentalCarDesktop.Models.DAO
 
                     }
                     message = string.Join(Environment.NewLine, cust);
-                    
+
                     if (counter == 1)
                     {
-                        if(searchCounter == 1)
+                        if (searchCounter == 1)
                         {
                             MessageBox.Show("Records retrieved successfully\n\n" + message);
-                        }   
+                        }
                         dr.Close();
                         cmd.Parameters.Clear();
                         cmd.Dispose();
                         return customer;
-
                     }
-                    else if(counter > 1)
+                    else if (counter > 1)
                     {
-                        
+
                         MessageBox.Show("Multimple Names found:\n\n" + message + "\n\n" + "Please enter the client ID for finalizing your search!");
                         dr.Close();
+                        cmd.Parameters.Clear();
+                        cmd.Dispose();
                     }
-
                     dr.Close();
                     cmd.Parameters.Clear();
                     cmd.Dispose();
                     return null;
-
                 }
                 catch (SqlException ex)
                 {
@@ -203,23 +197,28 @@ namespace RentalCarDesktop.Models.DAO
 
             using (SqlCommand cmd = new SqlCommand(getID, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
                     cmd.Parameters.AddWithValue("@CustomerID", paramValue);
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
                     if (dr.Read())
                     {
                         no = dr.GetInt32(no);
                     }
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return no;
+
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return no;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
 
@@ -278,7 +277,6 @@ namespace RentalCarDesktop.Models.DAO
                     return dt;
                 }
             }
-
         }
 
     }

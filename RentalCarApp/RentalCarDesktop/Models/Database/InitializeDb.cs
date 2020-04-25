@@ -11,22 +11,17 @@ namespace RentalCarDesktop.Models
     class InitializeDb:IDisposable
     {
         private SqlConnection cnn;
-        
-
         public InitializeDb()
         {
             if ((cnn = con()) == null)
             {
                 this.Dispose();
-            }
-            
+            }           
         }
-
         public SqlConnection getConnection()
         {
             return cnn;
         }
-
         private SqlConnection con()
         {
             SqlConnection conn = null;

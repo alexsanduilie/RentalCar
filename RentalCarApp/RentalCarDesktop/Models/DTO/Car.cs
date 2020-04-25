@@ -24,7 +24,7 @@ namespace RentalCarDesktop.Models.DTO
             this.price = price;
             this.location = location;
         }
-
+        //method built for testing purposes, just in case we want to build a Car model without assigning the ID
         public Car(string plate, string manufacturer, string model, double price, string location)
         {
             this.carID = -1;

@@ -51,8 +51,6 @@ namespace RentalCarDesktop
 
         private void Register_New_Customer_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'academy_netDataSet.Customers' table. You can move, or remove it, as needed.
-            //this.customersTableAdapter.Fill(this.academy_netDataSet.Customers);
             label6.Text = "";
             label7.Text = "";
             label8.Text = "";

@@ -27,8 +27,6 @@ namespace RentalCarDesktop
             DataTable reservations = new DataTable();
             reservations = reservationService.readAllInDataTable();
             dataGridView1.DataSource = reservations;
-            // TODO: This line of code loads data into the 'academy_netDataSet.Reservations' table. You can move, or remove it, as needed.
-            //this.reservationsTableAdapter.Fill(this.academy_netDataSet.Reservations);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,35 +44,29 @@ namespace RentalCarDesktop
             DataTable reservations = new DataTable();
             reservations = reservationService.readAllInDataTable();
             dataGridView1.DataSource = reservations;
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //selectReservType(1);
             selectReservTypeInDataTable(1);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //selectReservType(2);
             selectReservTypeInDataTable(2);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            //selectReservType(3);
             selectReservTypeInDataTable(3);
         }
 
         private void selectReservType(int reservID)
         {
-
             List<Reservation> reservations = new List<Reservation>();
             reservations = reservationService.readByStatus(reservID);
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = reservations;
-
         }
 
         private void selectReservTypeInDataTable(int reservID)

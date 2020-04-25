@@ -13,8 +13,7 @@ namespace RentalCarDesktop.Models.Business
 {
     class CarService
     {
-        private static readonly CarService instance = new CarService();
-        private CarDAO carDAO;
+        private static readonly CarService instance = new CarService();      
         static CarService()
         {
         }
@@ -30,58 +29,27 @@ namespace RentalCarDesktop.Models.Business
             }
         }
 
+        private CarDAO carDAO;
         public int confirmID(string column, string paramValue)
         {
-            try
-            {
                 return carDAO.confirmID(column, paramValue);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting customer ID: " + ex.Message);
-                return 0;
-            }
         }
 
         public int confirmOverallLocation(string column, string paramValue)
         {
-            try
-            {
                 return carDAO.confirmOverallLocation(column, paramValue);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting location: " + ex.Message);
-                return 0;
-            }
         }
 
         public DataTable readAllInDataTable()
         {
-            try
-            {
                 return carDAO.readAllInDataTable();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error finding data: " + ex.Message);
-                return null;
-            }
         }
 
         public List<Car> readAll()
         {
             List<Car> cars = new List<Car>();
-            try
-            {
                 cars = carDAO.readAll();
                 return cars;
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting records: " + ex.Message);
-                return cars;
-            }
         }
     }
 }

@@ -88,7 +88,7 @@ namespace RentalCarDesktop.Models.Business
                 message.Text = "Client ID can not be empty!";
                 client = false;
             }
-            else if (!Regex.IsMatch(clientID, "[0-9]") && !String.IsNullOrEmpty(clientID))
+            else if (!Regex.IsMatch(clientID, "^[0-9]+$") && !String.IsNullOrEmpty(clientID))
             {
                 message.Text = "Invalid input type, the client ID format should be a number";
                 client = false;

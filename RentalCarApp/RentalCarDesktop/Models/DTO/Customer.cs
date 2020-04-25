@@ -22,7 +22,7 @@ namespace RentalCarDesktop.Models.DTO
             this.location = location;
             this.zipCode = zipCode;
         }
-
+        //method built for testing purposes, just in case we want to build a Car model without assigning the ID
         public Customer(string name, DateTime birthDate, string location, int zipCode)
         {
             this.customerID = -1;
@@ -30,7 +30,6 @@ namespace RentalCarDesktop.Models.DTO
             this.birthDate = birthDate;
             this.location = location;
             this.zipCode = zipCode;
-
         }
 
         public Customer() { }

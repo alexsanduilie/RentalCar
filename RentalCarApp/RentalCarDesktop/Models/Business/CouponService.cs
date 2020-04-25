@@ -32,16 +32,8 @@ namespace RentalCarDesktop.Models.Business
         public List<Coupon> readAll()
         {
             List<Coupon> coupons = new List<Coupon>();
-            try
-            {
-                coupons = couponDAO.readAll();
-                return coupons;
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting records: " + ex.Message);
-                return coupons;
-            }
+            coupons = couponDAO.readAll();
+            return coupons;
         }
     }
 }

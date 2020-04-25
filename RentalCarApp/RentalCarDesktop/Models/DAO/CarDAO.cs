@@ -13,15 +13,12 @@ namespace RentalCarDesktop.Models.DAO
     class CarDAO
     {
         private static readonly CarDAO instance = new CarDAO();
-
         static CarDAO()
         {
         }
-
         private CarDAO()
         {
         }
-
         public static CarDAO Instance
         {
             get
@@ -82,7 +79,6 @@ namespace RentalCarDesktop.Models.DAO
                     return no;
                 }
             }
-
         }
 
         public int confirmOverallLocation(string column, string paramValue)
@@ -112,7 +108,6 @@ namespace RentalCarDesktop.Models.DAO
                     return no;
                 }
             }
-
         }
 
         public DataTable readAllInDataTable()
@@ -127,7 +122,6 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-
                     cmd.Parameters.Clear();
                     cmd.Dispose();
                     return dt;
@@ -138,7 +132,6 @@ namespace RentalCarDesktop.Models.DAO
                     return dt;
                 }
             }
-
         }
 
         public List<Car> readAll()
@@ -156,7 +149,6 @@ namespace RentalCarDesktop.Models.DAO
                     {
                         cars.Add(new Car(Int32.Parse(dr["CarID"].ToString()), dr["Plate"].ToString(), dr["Manufacturer"].ToString(), dr["Model"].ToString(), Double.Parse(dr["PricePerDay"].ToString()), dr["Location"].ToString()));
                     }
-
                     dr.Close();
                     cmd.Parameters.Clear();
                     cmd.Dispose();
@@ -168,7 +160,6 @@ namespace RentalCarDesktop.Models.DAO
                     return cars;
                 }
             }
-
         }
 
         public List<Car> searchCars(string plate, string model, string city, DateTime presentStartDate, DateTime presentEndDate)
@@ -222,7 +213,6 @@ namespace RentalCarDesktop.Models.DAO
                         counter++;
                     }
                     message = string.Join(Environment.NewLine, cars);
-
                     if (counter == 1)
                     {
                         MessageBox.Show("Car successfully found:" + message);
@@ -235,6 +225,8 @@ namespace RentalCarDesktop.Models.DAO
                     {
                         MessageBox.Show(cars.Count() + " Cars found:\n\n" + message);
                         dr.Close();
+                        cmd.Parameters.Clear();
+                        cmd.Dispose();
                         return cars;
                     }
                     else
@@ -245,7 +237,6 @@ namespace RentalCarDesktop.Models.DAO
                     cmd.Parameters.Clear();
                     cmd.Dispose();
                     return null;
-
                 }
                 catch (SqlException ex)
                 {
@@ -253,7 +244,6 @@ namespace RentalCarDesktop.Models.DAO
                     return null;
                 }
             }
-
         }
 
     }

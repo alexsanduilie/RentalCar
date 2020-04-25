@@ -99,13 +99,12 @@ namespace RentalCarDesktop.Controllers
                 dataGridView1.AutoGenerateColumns = true;
                 dataGridView1.DataSource = cars;
                 dataGridView1.Show();
-                label10.Text = "Available Cars based on selected criterias";
+                label10.Text = "Available Cars based on selected criterias -> ONLY the Car Plate is linked to Start/End Dates";
                 label6.Text = "";
                 label7.Text = "";
                 label8.Text = "";
                 label9.Text = "";
-            }
-            
+            }          
         }
         
         private void List_Available_Cars_Load(object sender, EventArgs e)

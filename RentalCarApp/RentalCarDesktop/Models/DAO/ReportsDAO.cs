@@ -125,6 +125,5 @@ namespace RentalCarDesktop.Models.DAO
             }
         }
 
-
     }
 }

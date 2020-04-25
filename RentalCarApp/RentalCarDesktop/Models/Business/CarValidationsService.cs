@@ -33,15 +33,7 @@ namespace RentalCarDesktop.Models.Business
         private static CustomerService customerService = CustomerService.Instance;
         public List<Car> searchCars(string plate, string model, string city, DateTime presentStartDate, DateTime presentEndDate)
         {
-            try
-            {
                 return carDAO.searchCars(plate, model, city, presentStartDate, presentEndDate);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error searching reservation: " + ex.Message);
-                return null;
-            }
         }
 
         public bool validateCarPlate(string carPlate, Label message)

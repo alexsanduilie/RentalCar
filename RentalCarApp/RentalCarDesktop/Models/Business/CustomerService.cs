@@ -32,92 +32,39 @@ namespace RentalCarDesktop.Models.Business
 
         public void create(Customer customer)
         {
-            try
-            {
-                customerDAO.create(customer);
-            } catch (SqlException ex)
-            {
-                MessageBox.Show("Error inserting customer: " + ex.Message);
-            }  
+            customerDAO.create(customer);
         }
 
         public void update(Customer customer)
         {
-            try
-            {
-                customerDAO.update(customer);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error updating customer: " + ex.Message);
-            }
+            customerDAO.update(customer);
         }
 
         public Customer search(string customerID, string Name)
         {
-            try
-            {
-                return customerDAO.search(customerID, Name);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error updating customer: " + ex.Message);
-                return null;
-            }
+            return customerDAO.search(customerID, Name);
         }
 
         public int getMaxID(string customerID)
         {
-            try
-            {
-                return customerDAO.getMaxID(customerID);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting customer ID: " + ex.Message);
-                return 0;
-            }
+            return customerDAO.getMaxID(customerID);
         }
 
         public int confirmID(string paramValue)
         {
-            try
-            {
-                return customerDAO.confirmID(paramValue);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting customer ID: " + ex.Message);
-                return 0;
-            }
+            return customerDAO.confirmID(paramValue);
         }
 
         public List<Customer> readAll()
         {
             List<Customer> customers = new List<Customer>();
-            try
-            {
-                customers = customerDAO.readAll();
-                return customers;
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error getting records: " + ex.Message);
-                return customers;
-            }
+            customers = customerDAO.readAll();
+            return customers;
         }
 
         public DataTable readAllInDataTable()
         {
-            try
-            {
-                return customerDAO.readAllInDataTable();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error finding data: " + ex.Message);
-                return null;
-            }
+            return customerDAO.readAllInDataTable();
         }
     }
 }

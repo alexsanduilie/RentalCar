@@ -57,7 +57,6 @@ namespace RentalCarDesktop.Models
                         message.Text = "The requested car does not exist, please enter another car plate!";
                         plate = false;
                     }
-
                 }
                 else
                 {
@@ -75,7 +74,7 @@ namespace RentalCarDesktop.Models
                 message.Text = "Client field can not be empty!";
                 cl = false;
             }
-            else if (!Regex.IsMatch(clientID, "[0-9]") && !String.IsNullOrEmpty(clientID))
+            else if (!Regex.IsMatch(clientID, "^[0-9]+$") && !String.IsNullOrEmpty(clientID))
             {
                 message.Text = "Invalid input type, the client ID format should be a number";
                 cl = false;
@@ -147,7 +146,6 @@ namespace RentalCarDesktop.Models
             Reservation dbR = new Reservation();
 
             dt = reservationService.readByPlate(plate);
-
             foreach (DataRow row in dt.Rows)
             {
                 

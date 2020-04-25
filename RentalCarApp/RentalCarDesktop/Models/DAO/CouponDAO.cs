@@ -12,15 +12,12 @@ namespace RentalCarDesktop.Models.DAO
     class CouponDAO
     {
         private static readonly CouponDAO instance = new CouponDAO();
-
         static CouponDAO()
         {
         }
-
         private CouponDAO()
         {
         }
-
         public static CouponDAO Instance
         {
             get
@@ -30,7 +27,6 @@ namespace RentalCarDesktop.Models.DAO
         }
 
         private static string table_Name = "Coupons";
-
         public List<Coupon> readAll()
         {
             string readSQL = "SELECT * FROM " + table_Name;
@@ -46,7 +42,6 @@ namespace RentalCarDesktop.Models.DAO
                     {
                         coupons.Add(new Coupon(dr["CouponCode"].ToString(), dr["Description"].ToString(), Double.Parse(dr["Discount"].ToString())));
                     }
-
                     dr.Close();
                     cmd.Parameters.Clear();
                     cmd.Dispose();
@@ -58,7 +53,7 @@ namespace RentalCarDesktop.Models.DAO
                     return coupons;
                 }
             }
-
         }
+
     }
 }

@@ -290,7 +290,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Green;
-            this.label10.Location = new System.Drawing.Point(847, 9);
+            this.label10.Location = new System.Drawing.Point(570, 19);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(58, 19);
             this.label10.TabIndex = 27;
