@@ -46,14 +46,17 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return dt;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return dt;
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -72,14 +75,17 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return dt;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return dt;
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -113,14 +119,17 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return dt;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return dt;
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace RentalCarDesktop
         {
             if (textBox1.ReadOnly == true)
             {
-                if (validateClientID() & validateClientName() & validateLocation() & validateZIP()){
+                if (validateClientID() & validateClient() & validateLocation() & validateZIP()){
                     Customer customer = new Customer(Int32.Parse(textBox1.Text), textBox2.Text, dateTimePicker1.Value, textBox4.Text, Int32.Parse(textBox3.Text));
                     customerService.update(customer);
                     foreach (TextBox tb in this.Controls.OfType<TextBox>().ToArray())
@@ -121,6 +121,11 @@ namespace RentalCarDesktop
         private bool validateClientName()
         {
             return customerValidations.validateClientName(textBox2.Text, label7, customer);
+        }
+
+        private bool validateClient()
+        {
+            return customerValidations.validateClient(textBox2.Text, label7);
         }
 
         private bool validateLocation()

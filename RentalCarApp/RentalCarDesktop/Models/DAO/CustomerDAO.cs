@@ -48,14 +48,16 @@ namespace RentalCarDesktop.Models.DAO
 
                     dataAdapter.InsertCommand = cmd;
                     dataAdapter.InsertCommand.ExecuteNonQuery();
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     MessageBox.Show("Customer created successfully");
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -76,15 +78,17 @@ namespace RentalCarDesktop.Models.DAO
                     cmd.Parameters.AddWithValue("@ZIP", customer.zipCode);
 
                     dataAdapter.UpdateCommand = cmd;
-                    dataAdapter.UpdateCommand.ExecuteNonQuery();
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
+                    dataAdapter.UpdateCommand.ExecuteNonQuery();                   
                     MessageBox.Show("Customer updated successfully");
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -105,11 +109,12 @@ namespace RentalCarDesktop.Models.DAO
 
             using (SqlCommand cmd = new SqlCommand(searchSQL, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
                     cmd.Parameters.AddWithValue("@CostumerID", customerID);
                     cmd.Parameters.AddWithValue("@Name", Name);
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
 
                     List<Customer> cust = new List<Customer>();
                     int counter = 0;
@@ -136,28 +141,24 @@ namespace RentalCarDesktop.Models.DAO
                         {
                             MessageBox.Show("Records retrieved successfully\n\n" + message);
                         }
-                        dr.Close();
-                        cmd.Parameters.Clear();
-                        cmd.Dispose();
                         return customer;
                     }
                     else if (counter > 1)
                     {
-
-                        MessageBox.Show("Multimple Names found:\n\n" + message + "\n\n" + "Please enter the client ID for finalizing your search!");
-                        dr.Close();
-                        cmd.Parameters.Clear();
-                        cmd.Dispose();
+                        MessageBox.Show("Multimple Names found:\n\n" + message + "\n\n" + "Please enter the ONLY client ID for finalizing your search!");
                     }
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return null;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return null;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
 
@@ -169,22 +170,26 @@ namespace RentalCarDesktop.Models.DAO
             int no = 0;
             using (SqlCommand cmd = new SqlCommand(getID, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
                     if (dr.Read())
                     {
                         no = dr.GetInt32(no) + 1;
                     }
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return no;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return no;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
 
@@ -207,7 +212,6 @@ namespace RentalCarDesktop.Models.DAO
                         no = dr.GetInt32(no);
                     }
                     return no;
-
                 }
                 catch (Exception ex)
                 {
@@ -231,24 +235,26 @@ namespace RentalCarDesktop.Models.DAO
 
             using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
-                    SqlDataReader dr = cmd.ExecuteReader();
-
+                    dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
                         customers.Add(new Customer(Int32.Parse(dr["CostumerID"].ToString()), dr["Name"].ToString(), DateTime.Parse(dr["BirthDate"].ToString()), dr["Location"].ToString(), Int32.Parse(dr["ZIPCode"].ToString())));
                     }
-
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return customers;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return customers;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
 
@@ -266,15 +272,17 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return dt;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return dt;
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }

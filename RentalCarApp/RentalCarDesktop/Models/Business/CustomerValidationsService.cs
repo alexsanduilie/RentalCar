@@ -37,6 +37,11 @@ namespace RentalCarDesktop.Models.Business
                 message.Text = "Client field can not be empty!";
                 client = false;
             }
+            else if (!Regex.IsMatch(clientName, "^[a-zA-Z\\s]+$") && !String.IsNullOrEmpty(clientName))
+            {
+                message.Text = "Invalid input type, the name should contain only alphabetic characters";
+                client = false;
+            }
             else
             {
                 message.Text = "";
@@ -51,6 +56,11 @@ namespace RentalCarDesktop.Models.Business
             if (String.IsNullOrEmpty(location))
             {
                 message.Text = "Location field can not be empty!";
+                city = false;
+            }
+            else if (!Regex.IsMatch(location, "^[a-zA-Z\\s]+$") && !String.IsNullOrEmpty(location))
+            {
+                message.Text = "Invalid input type, the location should contain only alphabetic characters";
                 city = false;
             }
             else
@@ -115,6 +125,11 @@ namespace RentalCarDesktop.Models.Business
             if (String.IsNullOrEmpty(clientName))
             {
                 message.Text = "Client Name can not be empty!";
+                client = false;
+            }
+            else if (!Regex.IsMatch(clientName, "^[a-zA-Z\\s]+$") && !String.IsNullOrEmpty(clientName))
+            {
+                message.Text = "Invalid input type, the location should contain only alphabetic characters";
                 client = false;
             }
             else

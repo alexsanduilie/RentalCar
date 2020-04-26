@@ -34,23 +34,26 @@ namespace RentalCarDesktop.Models.DAO
 
             using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
-                    SqlDataReader dr = cmd.ExecuteReader();
-
+                    dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
                         coupons.Add(new Coupon(dr["CouponCode"].ToString(), dr["Description"].ToString(), Double.Parse(dr["Discount"].ToString())));
                     }
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return coupons;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return coupons;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }

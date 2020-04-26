@@ -91,7 +91,6 @@ namespace RentalCarDesktop.Models
                 {
                     message.Text = "";
                 }
-
             }
             return cl;
         }
@@ -102,6 +101,11 @@ namespace RentalCarDesktop.Models
             if (String.IsNullOrEmpty(loc))
             {
                 message.Text = "City field can not be empty!";
+                client = false;
+            }
+            else if (!Regex.IsMatch(loc, "^[a-zA-Z\\s]+$") && !String.IsNullOrEmpty(loc))
+            {
+                message.Text = "Invalid input type, the location should contain only alphabetic characters";
                 client = false;
             }
             else

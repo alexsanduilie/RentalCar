@@ -49,14 +49,16 @@ namespace RentalCarDesktop.Models.DAO
 
                     dataAdapter.InsertCommand = cmd;
                     dataAdapter.InsertCommand.ExecuteNonQuery();
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     MessageBox.Show("Reservation created successfully");
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message + "\n You can not register the same Car Plate and Client Id");
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -81,14 +83,16 @@ namespace RentalCarDesktop.Models.DAO
 
                     dataAdapter.UpdateCommand = cmd;
                     dataAdapter.UpdateCommand.ExecuteNonQuery();
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     MessageBox.Show("Reservation updated successfully");
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -110,11 +114,12 @@ namespace RentalCarDesktop.Models.DAO
 
             using (SqlCommand cmd = new SqlCommand(searchSQL, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
                     cmd.Parameters.AddWithValue("@plate", plate);
                     cmd.Parameters.AddWithValue("@CostumerID", customerID);
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
 
                     List<Reservation> reserv = new List<Reservation>();
                     var message = "";
@@ -137,28 +142,24 @@ namespace RentalCarDesktop.Models.DAO
                     if (counter == 1)
                     {
                         MessageBox.Show("Rent retrieved successfully:" + reservation);
-                        dr.Close();
-                        cmd.Parameters.Clear();
-                        cmd.Dispose();
                         return reservation;
                     }
                     else if (counter > 1)
                     {
-
                         MessageBox.Show("Multiple Entries found:\n\n" + message + "\n\n" + "Please enter the Car Plate - Client ID association for finalizing the search!");
-                        dr.Close();
-                        cmd.Parameters.Clear();
-                        cmd.Dispose();
-                    }
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
+                    }                   
                     return null;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return null;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -170,23 +171,26 @@ namespace RentalCarDesktop.Models.DAO
 
             using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
                         reservation.Add(new Reservation(Int32.Parse(dr["CarID"].ToString()), dr["CarPlate"].ToString(), Int32.Parse(dr["CostumerID"].ToString()), Int32.Parse(dr["ReservStatsID"].ToString()), DateTime.Parse(dr["StartDate"].ToString()), DateTime.Parse(dr["EndDate"].ToString()), dr["Location"].ToString(), dr["CouponCode"].ToString()));
                     }
-
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return reservation;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return reservation;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -203,15 +207,17 @@ namespace RentalCarDesktop.Models.DAO
                 {
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return dt;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return dt;
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -229,15 +235,17 @@ namespace RentalCarDesktop.Models.DAO
                     cmd.Parameters.AddWithValue("@reservID", status);
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return dt;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return dt;
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -249,24 +257,28 @@ namespace RentalCarDesktop.Models.DAO
 
             using (SqlCommand cmd = new SqlCommand(readSQL, Program.conn))
             {
+                SqlDataReader dr = null;
                 try
                 {
                     cmd.Parameters.AddWithValue("@reservID", status);
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
 
                     while (dr.Read())
                     {
                         reservation.Add(new Reservation(Int32.Parse(dr["CarID"].ToString()), dr["CarPlate"].ToString(), Int32.Parse(dr["CostumerID"].ToString()), Int32.Parse(dr["ReservStatsID"].ToString()), DateTime.Parse(dr["StartDate"].ToString()), DateTime.Parse(dr["EndDate"].ToString()), dr["Location"].ToString(), dr["CouponCode"].ToString()));
-                    }
-                    dr.Close();
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
+                    }                    
                     return reservation;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return reservation;
+                }
+                finally
+                {
+                    dr.Close();
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
@@ -284,15 +296,17 @@ namespace RentalCarDesktop.Models.DAO
                     cmd.Parameters.AddWithValue("@plate", plate);
                     dataAdapter = new SqlDataAdapter(cmd);
                     dataAdapter.Fill(dt);
-
-                    cmd.Parameters.Clear();
-                    cmd.Dispose();
                     return dt;
                 }
                 catch (SqlException ex)
                 {
                     MessageBox.Show("SQL error: " + ex.Message);
                     return dt;
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Dispose();
                 }
             }
         }
