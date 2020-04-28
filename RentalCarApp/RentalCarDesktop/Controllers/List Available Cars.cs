@@ -51,7 +51,8 @@ namespace RentalCarDesktop.Controllers
 
         private bool validateRentPeriod()
         {
-            Reservation r = null;
+            //this reservation is just for testing, for not having a null one when the INSERT condtion is not met because the reservation status is <> 1 (when searching db records)
+            Reservation r = new Reservation(0, "", 0, 1, DateTime.Now, DateTime.Now, "", "");
             return reservationValidations.validateRentPeriod(textBox1.Text, label8, dateTimePicker1.Value.Date, dateTimePicker2.Value.Date, "INSERT", r);
         }
 

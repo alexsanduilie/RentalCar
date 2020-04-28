@@ -36,7 +36,8 @@ namespace RentalCarDesktop.Models.DAO
                              "INNER JOIN Customers c on r.CostumerID = c.CostumerID " +
                              "WHERE CONVERT(date, r.StartDate) >= CONVERT(date, GETDATE()-30) " +
                              "GROUP BY c.Name, r.CostumerID " +
-                             "HAVING count(r.CostumerID) = 4 OR count(r.CostumerID) = 3";
+                             "HAVING count(r.CostumerID) >= 3 " +
+                             "ORDER BY count(r.CostumerID) DESC";
 
             SqlDataAdapter dataAdapter;
             DataTable dt = new DataTable();
@@ -65,7 +66,8 @@ namespace RentalCarDesktop.Models.DAO
         {
             string readSQL = "SELECT CarPlate, CostumerID, StartDate, EndDate, Location, CouponCode " +
                              "FROM Reservations " +
-                             "WHERE CONVERT(date, StartDate) >= CONVERT(date, GETDATE()-6) ";
+                             "WHERE CONVERT(date, StartDate) >= CONVERT(date, GETDATE()-6) " +
+                             "ORDER BY StartDate DESC";
 
             SqlDataAdapter dataAdapter;
             DataTable dt = new DataTable();
@@ -100,7 +102,7 @@ namespace RentalCarDesktop.Models.DAO
                           "INNER JOIN Cars c ON r.CarID = c.CarID " +
                           "WHERE CONVERT(date, r.StartDate) >= '" + startDate.Date + "' AND CONVERT(date, r.EndDate) <= '" + endDate.Date + "' " +
                           "GROUP BY c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location " +
-                          "ORDER BY 'Number of Rents' ASC";
+                          "ORDER BY 'Number of Rents' DESC";
             } else
             {
                 readSQL = "SELECT TOP(5) c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location, count(r.CarPlate) as 'Number of Rents' " +
@@ -108,7 +110,7 @@ namespace RentalCarDesktop.Models.DAO
                           "INNER JOIN Cars c ON r.CarID = c.CarID " +
                           "WHERE CONVERT(date, r.StartDate) >= '" + startDate.Date + "' AND CONVERT(date, r.EndDate) <= '" + endDate.Date + "' " +
                           "GROUP BY c.Plate, c.Manufacturer, c.Model, c.PricePerDay, c.Location " +
-                          "ORDER BY 'Number of Rents' DESC";
+                          "ORDER BY 'Number of Rents' ASC";
             }
             
             SqlDataAdapter dataAdapter;
