@@ -78,7 +78,7 @@ namespace RentalCarDesktop.Models.Business
                 message.Text = "ZIP Code can not be empty!";
                 zip = false;
             }
-            else if (!Regex.IsMatch(ZIPCode, "[0-9]{5}") && !String.IsNullOrEmpty(ZIPCode))
+            else if (!Regex.IsMatch(ZIPCode, "^[0-9]{5}$") && !String.IsNullOrEmpty(ZIPCode))
             {
                 message.Text = "Invalid input type, the zip code format should be a number of 5 digits: 00000";
                 zip = false;
